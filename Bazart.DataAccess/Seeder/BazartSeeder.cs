@@ -18,7 +18,7 @@ namespace Bazart.DataAccess.Seeder
 
         }
 
-        public void Seeder()
+        public void Seed()
         {
             if (_dbContext.Database.CanConnect())
             {
@@ -26,6 +26,7 @@ namespace Bazart.DataAccess.Seeder
                 {
                     var products = CreateRandomProducts();
                     _dbContext.Products.AddRange(products);
+                    _dbContext.SaveChanges();
                 }
             }
         }
@@ -44,6 +45,9 @@ namespace Bazart.DataAccess.Seeder
                     ImageUrl = Faker.Name.First(),
                     CategoryId = Faker.RandomNumber.Next(1, 4),
                     Category = new Category()
+                    {
+                        Name = Faker.Name.First()
+                    }
                 },
                 new Product()
                 {
@@ -55,6 +59,9 @@ namespace Bazart.DataAccess.Seeder
                     ImageUrl = Faker.Name.First(),
                     CategoryId = Faker.RandomNumber.Next(1, 4),
                     Category = new Category()
+                    {
+                        Name = Faker.Name.First()
+                    }
                 }
             };
             return products;
