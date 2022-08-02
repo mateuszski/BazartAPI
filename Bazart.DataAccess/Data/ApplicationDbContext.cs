@@ -15,7 +15,8 @@ namespace Bazart.DataAccess.Data
         public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options) : base(options)
         {
         }
-        public DbSet<Product>
+        public DbSet<Product> Products { get; set; }
+        public DbSet<Category> Categories { get; set; }
 
     }
 }
