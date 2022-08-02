@@ -1,4 +1,5 @@
 using Bazart.DataAccess.Data;
+using Bazart.DataAccess.Seeder;
 using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -30,3 +31,5 @@ app.UseAuthorization();
 app.MapControllers();
 
 app.Run();
+
+

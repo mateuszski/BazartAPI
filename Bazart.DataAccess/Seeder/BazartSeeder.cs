@@ -15,6 +15,7 @@ namespace Bazart.DataAccess.Seeder
         public BazartSeeder(BazartDbContext dbContext)
         {
             _dbContext = dbContext;
+
         }
 
         public void Seeder()
@@ -37,9 +38,26 @@ namespace Bazart.DataAccess.Seeder
                 {
                     Name = Faker.Name.FullName(),
                     Description = Faker.Lorem.Sentence(),
-                    Price = Faker.
+                    Price = Faker.Finance.Coupon(),
+                    Quantity = Faker.RandomNumber.Next(1, 10),
+                    isForSale = Faker.Boolean.Random(),
+                    ImageUrl = Faker.Name.First(),
+                    CategoryId = Faker.RandomNumber.Next(1, 4),
+                    Category = new Category()
+                },
+                new Product()
+                {
+                    Name = Faker.Name.FullName(),
+                    Description = Faker.Lorem.Sentence(),
+                    Price = Faker.Finance.Coupon(),
+                    Quantity = Faker.RandomNumber.Next(1, 10),
+                    isForSale = Faker.Boolean.Random(),
+                    ImageUrl = Faker.Name.First(),
+                    CategoryId = Faker.RandomNumber.Next(1, 4),
+                    Category = new Category()
                 }
-            }
+            };
+            return products;
         }
     }
 }
