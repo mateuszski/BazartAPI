@@ -35,7 +35,9 @@ namespace Bazart.DataAccess.Seeder
             {
                 new Product()
                 {
-
+                    Name = Faker.Name.FullName(),
+                    Description = Faker.Lorem.Sentence(),
+                    Price = Faker.
                 }
             }
         }
