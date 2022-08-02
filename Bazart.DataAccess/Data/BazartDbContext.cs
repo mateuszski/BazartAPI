@@ -4,9 +4,9 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Bazart.DataAccess.Data
 {
-    public class ApplicationDbContext : DbContext
+    public class BazartDbContext : DbContext
     {
-        public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options) : base(options)
+        public BazartDbContext(DbContextOptions<BazartDbContext> options) : base(options)
         {
         }
         public DbSet<Product> Products { get; set; }
