@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Bazart.DataAccess.Data;
+﻿using Bazart.DataAccess.Data;
 using Bazart.Models;
 
 namespace Bazart.DataAccess.Seeder
