@@ -18,7 +18,7 @@ namespace Bazart.DataAccess.Seeder
 
         }
 
-        public void Seeder()
+        public void Seed()
         {
             if (_dbContext.Database.CanConnect())
             {
@@ -26,6 +26,7 @@ namespace Bazart.DataAccess.Seeder
                 {
                     var products = CreateRandomProducts();
                     _dbContext.Products.AddRange(products);
+                    _dbContext.SaveChanges();
                 }
             }
         }
@@ -41,9 +42,11 @@ namespace Bazart.DataAccess.Seeder
                     Price = Faker.Finance.Coupon(),
                     Quantity = Faker.RandomNumber.Next(1, 10),
                     isForSale = Faker.Boolean.Random(),
-                    ImageUrl = Faker.Name.First(),
-                    CategoryId = Faker.RandomNumber.Next(1, 4),
+                    ImageUrl = Faker.Internet.Url(),
                     Category = new Category()
+                    {
+                        Name = Faker.Name.First()
+                    }
                 },
                 new Product()
                 {
@@ -52,9 +55,75 @@ namespace Bazart.DataAccess.Seeder
                     Price = Faker.Finance.Coupon(),
                     Quantity = Faker.RandomNumber.Next(1, 10),
                     isForSale = Faker.Boolean.Random(),
-                    ImageUrl = Faker.Name.First(),
-                    CategoryId = Faker.RandomNumber.Next(1, 4),
+                    ImageUrl = Faker.Internet.Url(),
                     Category = new Category()
+                    {
+                        Name = Faker.Name.First()
+                    }
+                },
+                new Product()
+                {
+                    Name = Faker.Name.FullName(),
+                    Description = Faker.Lorem.Sentence(),
+                    Price = Faker.Finance.Coupon(),
+                    Quantity = Faker.RandomNumber.Next(1, 10),
+                    isForSale = Faker.Boolean.Random(),
+                    ImageUrl = Faker.Internet.Url(),
+                    Category = new Category()
+                    {
+                        Name = Faker.Name.First()
+                    }
+                },
+                new Product()
+                {
+                    Name = Faker.Name.FullName(),
+                    Description = Faker.Lorem.Sentence(),
+                    Price = Faker.Finance.Coupon(),
+                    Quantity = Faker.RandomNumber.Next(1, 10),
+                    isForSale = Faker.Boolean.Random(),
+                    ImageUrl = Faker.Internet.Url(),
+                    Category = new Category()
+                    {
+                        Name = Faker.Name.First()
+                    }
+                },
+                new Product()
+                {
+                    Name = Faker.Name.FullName(),
+                    Description = Faker.Lorem.Sentence(),
+                    Price = Faker.Finance.Coupon(),
+                    Quantity = Faker.RandomNumber.Next(1, 10),
+                    isForSale = Faker.Boolean.Random(),
+                    ImageUrl = Faker.Internet.Url(),
+                    Category = new Category()
+                    {
+                        Name = Faker.Name.First()
+                    }
+                },
+                new Product()
+                {
+                    Name = Faker.Name.FullName(),
+                    Description = Faker.Lorem.Sentence(),
+                    Price = Faker.Finance.Coupon(),
+                    Quantity = Faker.RandomNumber.Next(1, 10),
+                    isForSale = Faker.Boolean.Random(),
+                    ImageUrl = Faker.Internet.Url(),
+                    Category = new Category()
+                    {
+                        Name = Faker.Name.First()
+                    }
+                },new Product()
+                {
+                    Name = Faker.Name.FullName(),
+                    Description = Faker.Lorem.Sentence(),
+                    Price = Faker.Finance.Coupon(),
+                    Quantity = Faker.RandomNumber.Next(1, 10),
+                    isForSale = Faker.Boolean.Random(),
+                    ImageUrl = Faker.Internet.Url(),
+                    Category = new Category()
+                    {
+                        Name = Faker.Name.First()
+                    }
                 }
             };
             return products;
