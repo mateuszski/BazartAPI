@@ -28,7 +28,7 @@ namespace Bazart.DataAccess.Seeder
 
         private IEnumerable<Product> CreateRandomProducts()
         {
-            Category obraazCategory = new Category()
+            Category pictureCategory = new Category()
             {
                 Name = "obraz",
                 Description = Faker.Lorem.Sentence()
@@ -46,7 +46,7 @@ namespace Bazart.DataAccess.Seeder
                     ImageUrl = Faker.Internet.Url(),
                     Categories = new List<Category>()
                     {
-                        obraazCategory
+                        pictureCategory
                     }
                 },
                 new Product()
@@ -59,7 +59,7 @@ namespace Bazart.DataAccess.Seeder
                     ImageUrl = Faker.Internet.Url(),
                     Categories = new List<Category>()
                     {
-                        obraazCategory
+                        pictureCategory
                     }
                 },
                 new Product()
@@ -72,7 +72,7 @@ namespace Bazart.DataAccess.Seeder
                     ImageUrl = Faker.Internet.Url(),
                     Categories = new List<Category>()
                     {
-                        obraazCategory
+                        pictureCategory
                     }
                 },
                 new Product()
