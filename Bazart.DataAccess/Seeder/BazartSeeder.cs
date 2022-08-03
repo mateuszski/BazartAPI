@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Bazart.DataAccess.Data;
+﻿using Bazart.DataAccess.Data;
 using Bazart.Models;
 
 namespace Bazart.DataAccess.Seeder
@@ -48,7 +43,15 @@ namespace Bazart.DataAccess.Seeder
                     {
                         new Category()
                         {
-                            Name = "obraz",
+                            Name = Faker.Name.First(),
+                            Description = Faker.Lorem.Sentence()
+                        }, new Category()
+                        {
+                            Name = Faker.Name.First(),
+                            Description = Faker.Lorem.Sentence()
+                        }, new Category()
+                        {
+                            Name = Faker.Name.First(),
                             Description = Faker.Lorem.Sentence()
                         }
                     }
@@ -65,10 +68,14 @@ namespace Bazart.DataAccess.Seeder
                     {
                         new Category()
                         {
-                            Name = "obraz",
+                            Name = Faker.Name.First(),
                             Description = Faker.Lorem.Sentence()
-
-                        }
+                        },
+                        new Category()
+                        {
+                        Name = Faker.Name.First(),
+                        Description = Faker.Lorem.Sentence()
+                    }
                     }
                 },
                 new Product()
