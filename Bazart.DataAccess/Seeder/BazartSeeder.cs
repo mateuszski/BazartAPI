@@ -33,6 +33,7 @@ namespace Bazart.DataAccess.Seeder
 
         private IEnumerable<Product> CreateRandomProducts()
         {
+
             var products = new List<Product>()
             {
                 new Product()
@@ -43,9 +44,13 @@ namespace Bazart.DataAccess.Seeder
                     Quantity = Faker.RandomNumber.Next(1, 10),
                     isForSale = Faker.Boolean.Random(),
                     ImageUrl = Faker.Internet.Url(),
-                    Category = new Category()
+                    Categories = new List<Category>()
                     {
-                        Name = Faker.Name.First()
+                        new Category()
+                        {
+                            Name = "obraz",
+                            Description = Faker.Lorem.Sentence()
+                        }
                     }
                 },
                 new Product()
@@ -56,9 +61,14 @@ namespace Bazart.DataAccess.Seeder
                     Quantity = Faker.RandomNumber.Next(1, 10),
                     isForSale = Faker.Boolean.Random(),
                     ImageUrl = Faker.Internet.Url(),
-                    Category = new Category()
+                    Categories = new List<Category>()
                     {
-                        Name = Faker.Name.First()
+                        new Category()
+                        {
+                            Name = "obraz",
+                            Description = Faker.Lorem.Sentence()
+
+                        }
                     }
                 },
                 new Product()
@@ -69,9 +79,13 @@ namespace Bazart.DataAccess.Seeder
                     Quantity = Faker.RandomNumber.Next(1, 10),
                     isForSale = Faker.Boolean.Random(),
                     ImageUrl = Faker.Internet.Url(),
-                    Category = new Category()
+                    Categories = new List<Category>()
                     {
-                        Name = Faker.Name.First()
+                        new Category()
+                        {
+                            Name = Faker.Name.First(),
+                            Description = Faker.Lorem.Sentence()
+                        }
                     }
                 },
                 new Product()
@@ -82,9 +96,13 @@ namespace Bazart.DataAccess.Seeder
                     Quantity = Faker.RandomNumber.Next(1, 10),
                     isForSale = Faker.Boolean.Random(),
                     ImageUrl = Faker.Internet.Url(),
-                    Category = new Category()
+                    Categories = new List<Category>()
                     {
-                        Name = Faker.Name.First()
+                        new Category()
+                        {
+                            Name = Faker.Name.First(),
+                            Description = Faker.Lorem.Sentence(),
+                        }
                     }
                 },
                 new Product()
@@ -95,9 +113,13 @@ namespace Bazart.DataAccess.Seeder
                     Quantity = Faker.RandomNumber.Next(1, 10),
                     isForSale = Faker.Boolean.Random(),
                     ImageUrl = Faker.Internet.Url(),
-                    Category = new Category()
+                    Categories = new List<Category>()
                     {
-                        Name = Faker.Name.First()
+                        new Category()
+                        {
+                            Name = Faker.Name.First(),
+                            Description = Faker.Lorem.Sentence()
+                        }
                     }
                 },
                 new Product()
@@ -108,9 +130,13 @@ namespace Bazart.DataAccess.Seeder
                     Quantity = Faker.RandomNumber.Next(1, 10),
                     isForSale = Faker.Boolean.Random(),
                     ImageUrl = Faker.Internet.Url(),
-                    Category = new Category()
+                    Categories = new List<Category>()
                     {
-                        Name = Faker.Name.First()
+                        new Category()
+                        {
+                            Name = Faker.Name.First(),
+                            Description = Faker.Lorem.Sentence()
+                        }
                     }
                 },new Product()
                 {
@@ -120,9 +146,13 @@ namespace Bazart.DataAccess.Seeder
                     Quantity = Faker.RandomNumber.Next(1, 10),
                     isForSale = Faker.Boolean.Random(),
                     ImageUrl = Faker.Internet.Url(),
-                    Category = new Category()
+                    Categories = new List<Category>()
                     {
-                        Name = Faker.Name.First()
+                        new Category()
+                        {
+                            Name = Faker.Name.First(),
+                            Description = Faker.Lorem.Sentence()
+                        }
                     }
                 }
             };
