@@ -1,6 +1,8 @@
-﻿using Bazart.DataAccess.Data;
+﻿using AutoMapper;
+using Bazart.DataAccess.Data;
 using Bazart.Models;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 
 namespace Bazart.Controllers
 {
@@ -8,36 +10,54 @@ namespace Bazart.Controllers
     public class BazartController : ControllerBase
     {
         private readonly BazartDbContext _dbContext;
-        public BazartController(BazartDbContext dbContext)
+        private readonly IMapper _mapper;
+        public BazartController(BazartDbContext dbContext, IMapper mapper)
         {
             _dbContext = dbContext;
+            _mapper = mapper;
         }
         [HttpGet]
         //[Route("api/bazart")]
         //// https://localhost:7120/api/bazart
-        public ActionResult<IEnumerable<Product>> GetAll([FromQuery]string? like=null)
+        public ActionResult<IEnumerable<ProductDto>> GetAll([FromQuery]string? like=null)
         {
-            var bazart = _dbContext.Products.AsQueryable();
+            var products = _dbContext
+                .Products
+                .Include(p => p.Categories)
+                .ToList()
+                .AsQueryable();
+                
+            var productsDto = _mapper.Map<List<ProductDto>>(products);
             if (!string.IsNullOrWhiteSpace(like))
             {
-                bazart = bazart.Where(d => d.Description.Contains(like));
+                products = products.Where(d => d.Description.Contains(like));
             }
 
-            return Ok(bazart.ToList());
+            return Ok(productsDto);
         }
 
         [HttpGet("{id:int}")]
         //[Route("{id:int}")]
-        public ActionResult<IEnumerable<Product>> GetById(int id)
+        public ActionResult<IEnumerable<ProductDto>> GetById(int id)
         {
-            var bazartId = _dbContext.Products.FirstOrDefault(p => p.Id == id);
-            if (bazartId is null)
+            var productsId = _dbContext
+                .Products
+                .Include(p => p.Categories)
+                .FirstOrDefault(p => p.Id == id);
+            if (productsId is null)
             {
                 return NotFound();
             }
 
-            return Ok(bazartId);
+            var productsIdDto = _mapper.Map<ProductDto>(productsId);
+            return Ok(productsIdDto);
         }
+
+        //[HttpPost]
+        //public ActionResult CreateProduct([FromBody] CreateProductDto create)
+        //{
+
+        //}
 
     }
 }
