@@ -7,14 +7,9 @@ using System.Threading.Tasks;
 
 namespace Bazart.Models
 {
-    public class Category
+    public class CategoryDto
     {
-        [Key]
-        public int Id { get; set; }
         [Display(Name = "Category")]
         public string Name { get; set; }
-
-        public int ProductId { get; set; }
-        public virtual Product Product { get; set; }
     }
 }

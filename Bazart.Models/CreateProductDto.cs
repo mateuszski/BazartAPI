@@ -1,19 +1,16 @@
-﻿using Microsoft.AspNetCore.Mvc.ModelBinding.Validation;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Mvc.ModelBinding.Validation;
 
 namespace Bazart.Models
 {
-    public class Product
+    public class CreateProductDto
     {
-        public int Id { get; set; }
-        [Required]
-        [MaxLength(50)]
         public string Name { get; set; }
         [MaxLength(300)]
         [Required]
@@ -29,6 +26,6 @@ namespace Bazart.Models
         [Display(Name = "Art Picture")]
         [ValidateNever]
         public string ImageUrl { get; set; }
-        public virtual List<Category> Categories { get; set; }
+        public string Category { get; set; }
     }
 }
