@@ -29,13 +29,6 @@ namespace Bazart.Models
         [Display(Name = "Art Picture")]
         [ValidateNever]
         public string ImageUrl { get; set; }
-        [Required]
-        [Display(Name = "Category")]
-        public int CategoryId { get; set; }
-        [ForeignKey("CategoryId")]
-        [ValidateNever]
-        public Category Category { get; set; }
-
-
+        public virtual List<Category> Categories { get; set; }
     }
 }
