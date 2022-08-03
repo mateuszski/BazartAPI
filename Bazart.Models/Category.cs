@@ -12,9 +12,11 @@ namespace Bazart.Models
         [Key]
         public int Id { get; set; }
         [Display(Name = "Category")]
+        [Required]
+        [MaxLength(50)]
         public string Name { get; set; }
+        [MaxLength(300)]
         public string Description { get; set; }
-        public int ProductId { get; set; }
-        public virtual Product Product { get; set; }
+        public virtual List<Product> Products { get; set; }
     }
 }

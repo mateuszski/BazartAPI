@@ -11,6 +11,7 @@ namespace Bazart.Models
 {
     public class Product
     {
+        [Key]
         public int Id { get; set; }
         [Required]
         [MaxLength(50)]
@@ -29,6 +30,7 @@ namespace Bazart.Models
         [Display(Name = "Art Picture")]
         [ValidateNever]
         public string ImageUrl { get; set; }
+        
         public virtual List<Category> Categories { get; set; }
     }
 }
