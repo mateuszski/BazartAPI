@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using Bazart.DataAccess.Data;
 using Bazart.Models;
+using Bazart.Services;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
@@ -9,48 +10,36 @@ namespace Bazart.Controllers
     [Route("api/product")]
     public class ProductController : ControllerBase
     {
-        private readonly BazartDbContext _dbContext;
-        private readonly IMapper _mapper;
-        public ProductController(BazartDbContext dbContext, IMapper mapper)
+        private readonly IProductService _productService;
+        public ProductController(IProductService productService)
         {
-            _dbContext = dbContext;
-            _mapper = mapper;
+            _productService = productService;
         }
         [HttpGet]
         //[Route("api/product")]
         //// https://localhost:7120/api/product
         public ActionResult<IEnumerable<ProductDto>> GetAll([FromQuery]string? like=null)
         {
-            var products = _dbContext
-                .Products
-                .Include(p => p.Categories)
-                .ToList()
-                .AsQueryable();
-                
-            var productsDto = _mapper.Map<List<ProductDto>>(products);
+            var products = _productService.GetAllProducts();
             if (!string.IsNullOrWhiteSpace(like))
             {
                 products = products.Where(d => d.Description.Contains(like));
             }
 
-            return Ok(productsDto);
+            return Ok(products);
         }
 
         [HttpGet("{id:int}")]
         //[Route("{id:int}")]
         public ActionResult<IEnumerable<ProductDto>> GetById([FromRoute]int id)
         {
-            var productsId = _dbContext
-                .Products
-                .Include(p => p.Categories)
-                .FirstOrDefault(p => p.Id == id);
-            if (productsId is null)
+            var productById = _productService.GetProductById(id);
+            if (productById is null)
             {
                 return NotFound();
             }
 
-            var productsIdDto = _mapper.Map<ProductDto>(productsId);
-            return Ok(productsIdDto);
+            return Ok(productById);
         }
 
         [HttpPost]
@@ -60,11 +49,10 @@ namespace Bazart.Controllers
             {
                 return BadRequest(ModelState);
             }
-            var product = _mapper.Map<Product>(create);
-            _dbContext.Products.Add(product);
-            _dbContext.SaveChanges();
 
-            return Created($"/api/product{product.Id}",null);
+            var productId  = _productService.CreateNewProduct(create);
+
+            return Created($"/api/product{productId}",null);
         }
 
         [HttpDelete("{id:int}")]
@@ -74,14 +62,13 @@ namespace Bazart.Controllers
             {
                 return BadRequest(ModelState);
             }
-            var product = _dbContext
-                .Products
-                .Find(id);
-            _dbContext.Remove(product);
-            _dbContext.SaveChanges();
             
-                
-
+            bool status = _productService.RemoveProduct(id);
+            if (status == false)
+            {
+                return BadRequest("Item not found");
+            }
+            
             return Ok();
         }
 
