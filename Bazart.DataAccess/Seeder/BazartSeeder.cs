@@ -28,6 +28,11 @@ namespace Bazart.DataAccess.Seeder
 
         private IEnumerable<Product> CreateRandomProducts()
         {
+            Category pictureCategory = new Category()
+            {
+                Name = "obraz",
+                Description = Faker.Lorem.Sentence()
+            };
 
             var products = new List<Product>()
             {
@@ -41,19 +46,7 @@ namespace Bazart.DataAccess.Seeder
                     ImageUrl = Faker.Internet.Url(),
                     Categories = new List<Category>()
                     {
-                        new Category()
-                        {
-                            Name = Faker.Name.First(),
-                            Description = Faker.Lorem.Sentence()
-                        }, new Category()
-                        {
-                            Name = Faker.Name.First(),
-                            Description = Faker.Lorem.Sentence()
-                        }, new Category()
-                        {
-                            Name = Faker.Name.First(),
-                            Description = Faker.Lorem.Sentence()
-                        }
+                        pictureCategory
                     }
                 },
                 new Product()
@@ -66,16 +59,7 @@ namespace Bazart.DataAccess.Seeder
                     ImageUrl = Faker.Internet.Url(),
                     Categories = new List<Category>()
                     {
-                        new Category()
-                        {
-                            Name = Faker.Name.First(),
-                            Description = Faker.Lorem.Sentence()
-                        },
-                        new Category()
-                        {
-                        Name = Faker.Name.First(),
-                        Description = Faker.Lorem.Sentence()
-                    }
+                        pictureCategory
                     }
                 },
                 new Product()
@@ -88,11 +72,7 @@ namespace Bazart.DataAccess.Seeder
                     ImageUrl = Faker.Internet.Url(),
                     Categories = new List<Category>()
                     {
-                        new Category()
-                        {
-                            Name = Faker.Name.First(),
-                            Description = Faker.Lorem.Sentence()
-                        }
+                        pictureCategory
                     }
                 },
                 new Product()
