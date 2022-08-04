@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using Bazart.API.DTO;
 using Bazart.DataAccess.Data;
 using Bazart.Models;
 using Microsoft.AspNetCore.Mvc;
@@ -61,6 +62,24 @@ namespace Bazart.Services
                 return false;
             }
             _dbContext.Products.Remove(isRemoveProduct);
+            _dbContext.SaveChanges();
+            return true;
+        }
+
+        public bool UpdateProduct(int id, UpdateProductDto update)
+        {
+            var product = _dbContext.Products.FirstOrDefault(p => p.Id == id);
+            if (product is null)
+            {
+                return false;
+            }
+            
+            product.Name = update.Name;
+            product.Description = update.Description;
+            product.Price = update.Price;
+            product.Quantity = update.Quantity;
+            product.isForSale = update.isForSale;
+            product.ImageUrl = update.ImageUrl;
             _dbContext.SaveChanges();
             return true;
         }

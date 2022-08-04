@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using Bazart.API.DTO;
 using Bazart.DataAccess.Data;
 using Bazart.Models;
 using Bazart.Services;
@@ -70,6 +71,23 @@ namespace Bazart.Controllers
             }
             
             return NoContent();
+        }
+
+        [HttpPut("{id:int}")]
+        public ActionResult UpdateProduct([FromRoute] int id, [FromBody] UpdateProductDto update)
+        {
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
+
+            bool isUpdated = _productService.UpdateProduct(id, update);
+            if (!isUpdated)
+            {
+                return NotFound();
+            }
+
+            return Ok();
         }
 
     }
