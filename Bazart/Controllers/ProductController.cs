@@ -6,19 +6,19 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Bazart.Controllers
 {
-    [Route("api/bazart")]
-    public class BazartController : ControllerBase
+    [Route("api/product")]
+    public class ProductController : ControllerBase
     {
         private readonly BazartDbContext _dbContext;
         private readonly IMapper _mapper;
-        public BazartController(BazartDbContext dbContext, IMapper mapper)
+        public ProductController(BazartDbContext dbContext, IMapper mapper)
         {
             _dbContext = dbContext;
             _mapper = mapper;
         }
         [HttpGet]
-        //[Route("api/bazart")]
-        //// https://localhost:7120/api/bazart
+        //[Route("api/product")]
+        //// https://localhost:7120/api/product
         public ActionResult<IEnumerable<ProductDto>> GetAll([FromQuery]string? like=null)
         {
             var products = _dbContext
@@ -38,7 +38,7 @@ namespace Bazart.Controllers
 
         [HttpGet("{id:int}")]
         //[Route("{id:int}")]
-        public ActionResult<IEnumerable<ProductDto>> GetById(int id)
+        public ActionResult<IEnumerable<ProductDto>> GetById([FromRoute]int id)
         {
             var productsId = _dbContext
                 .Products
@@ -53,11 +53,19 @@ namespace Bazart.Controllers
             return Ok(productsIdDto);
         }
 
-        //[HttpPost]
-        //public ActionResult CreateProduct([FromBody] CreateProductDto create)
-        //{
+        [HttpPost]
+        public ActionResult CreateProduct([FromBody] CreateProductDto create)
+        {
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
+            var product = _mapper.Map<Product>(create);
+            _dbContext.Products.Add(product);
+            _dbContext.SaveChanges();
 
-        //}
+            return Created($"/api/product{product.Id}",null);
+        }
 
     }
 }

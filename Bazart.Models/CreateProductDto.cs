@@ -9,11 +9,13 @@ using Microsoft.AspNetCore.Mvc.ModelBinding.Validation;
 
 namespace Bazart.Models
 {
-    public class CreateProductDto
+    public class  CreateProductDto
     {
-        public string Name { get; set; }
-        [MaxLength(300)]
         [Required]
+        [MaxLength(50)]
+        public string Name { get; set; }
+        [Required]
+        [MaxLength(300)]
         public string Description { get; set; }
         [Column(TypeName = "decimal(18,2)")]
         //[Required]
@@ -26,6 +28,5 @@ namespace Bazart.Models
         [Display(Name = "Art Picture")]
         [ValidateNever]
         public string ImageUrl { get; set; }
-        public string Category { get; set; }
     }
 }

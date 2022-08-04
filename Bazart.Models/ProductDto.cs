@@ -11,6 +11,8 @@ namespace Bazart.Models
 {
     public class ProductDto
     {
+        [Required]
+        [MaxLength(50)]
         public string Name { get; set; }
         [MaxLength(300)]
         [Required]
