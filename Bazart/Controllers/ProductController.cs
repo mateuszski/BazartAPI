@@ -67,5 +67,23 @@ namespace Bazart.Controllers
             return Created($"/api/product{product.Id}",null);
         }
 
+        [HttpDelete("{id:int}")]
+        public ActionResult RemoveProduct([FromRoute] int id)
+        {
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
+            var product = _dbContext
+                .Products
+                .Find(id);
+            _dbContext.Remove(product);
+            _dbContext.SaveChanges();
+            
+                
+
+            return Ok();
+        }
+
     }
 }
