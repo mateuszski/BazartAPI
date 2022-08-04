@@ -55,12 +55,12 @@ namespace Bazart.Services
 
         public bool RemoveProduct(int id)
         {
-            var product = _dbContext.Products.FirstOrDefault(p => p.Id == id);
-            if (product is null)
+            var isRemoveProduct = _dbContext.Products.FirstOrDefault(p => p.Id == id);
+            if (isRemoveProduct is null)
             {
                 return false;
             }
-            _dbContext.Products.Remove(product);
+            _dbContext.Products.Remove(isRemoveProduct);
             _dbContext.SaveChanges();
             return true;
         }

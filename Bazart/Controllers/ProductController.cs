@@ -63,13 +63,13 @@ namespace Bazart.Controllers
                 return BadRequest(ModelState);
             }
             
-            bool status = _productService.RemoveProduct(id);
-            if (status == false)
+            bool isRemoveProduct = _productService.RemoveProduct(id);
+            if (!isRemoveProduct)
             {
-                return BadRequest("Item not found");
+                return NotFound();
             }
             
-            return Ok();
+            return NoContent();
         }
 
     }
