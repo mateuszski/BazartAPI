@@ -6,9 +6,9 @@ namespace Bazart.Services;
 
 public interface IProductService
 {
-    IEnumerable<ProductDto> GetAllProducts([FromQuery] string? like = null);
+    IEnumerable<ProductDto> GetAllProducts();
     ProductDto GetProductById([FromRoute]int id);
     int CreateNewProduct(CreateProductDto create);
-    bool RemoveProduct(int id);
-    bool UpdateProduct(int id, UpdateProductDto update);
+    void RemoveProduct(int id);
+    void UpdateProduct(int id, UpdateProductDto update);
 }

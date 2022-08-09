@@ -10,7 +10,6 @@ namespace Bazart.DataAccess.Seeder
         public BazartSeeder(BazartDbContext dbContext)
         {
             _dbContext = dbContext;
-
         }
 
         public void Seed()

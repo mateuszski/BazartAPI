@@ -27,7 +27,7 @@ namespace Bazart.Models
         [Required]
         public bool isForSale { get; set; }
         [Required]
-        [Display(Name = "Art Picture")]
+        //[Display(Name = "Art Picture")] przy widoku
         [ValidateNever]
         public string ImageUrl { get; set; }
         

@@ -1,5 +1,7 @@
 ﻿using AutoMapper;
 using Bazart.API.DTO;
+using Bazart.API.Exceptions;
+using Bazart.Controllers;
 using Bazart.DataAccess.Data;
 using Bazart.Models;
 using Microsoft.AspNetCore.Mvc;
@@ -18,20 +20,19 @@ namespace Bazart.Services
             _mapper = mapper;
         }
 
-        public IEnumerable<ProductDto> GetAllProducts([FromQuery] string? like = null)
+        public IEnumerable<ProductDto> GetAllProducts()
         {
             var products = _dbContext
-                .Products
-                .Include(p => p.Categories)
-                .ToList()
-                .AsQueryable();
+               .Products
+               .Include(p => p.Categories)
+               .ToList();
 
             var productsDto = _mapper.Map<List<ProductDto>>(products);
 
             return productsDto;
         }
 
-        public ProductDto GetProductById([FromRoute]int id)
+        public ProductDto GetProductById([FromRoute] int id)
         {
             var productsId = _dbContext
                 .Products
@@ -39,9 +40,9 @@ namespace Bazart.Services
                 .FirstOrDefault(p => p.Id == id);
             if (productsId is null)
             {
-                return null;
+                throw new NotFoundException("Product not found.");
             }
-            
+
             var productsIdDto = _mapper.Map<ProductDto>(productsId);
             return productsIdDto;
         }
@@ -54,26 +55,25 @@ namespace Bazart.Services
             return product.Id;
         }
 
-        public bool RemoveProduct(int id)
+        public void RemoveProduct(int id)
         {
             var isRemoveProduct = _dbContext.Products.FirstOrDefault(p => p.Id == id);
             if (isRemoveProduct is null)
             {
-                return false;
+                throw new NotFoundException("Product not found");
             }
             _dbContext.Products.Remove(isRemoveProduct);
             _dbContext.SaveChanges();
-            return true;
         }
 
-        public bool UpdateProduct(int id, UpdateProductDto update)
+        public void UpdateProduct(int id, UpdateProductDto update)
         {
             var product = _dbContext.Products.FirstOrDefault(p => p.Id == id);
             if (product is null)
             {
-                return false;
+                throw new NotFoundException("Product not found");
             }
-            
+
             product.Name = update.Name;
             product.Description = update.Description;
             product.Price = update.Price;
@@ -81,7 +81,6 @@ namespace Bazart.Services
             product.isForSale = update.isForSale;
             product.ImageUrl = update.ImageUrl;
             _dbContext.SaveChanges();
-            return true;
         }
     }
 }

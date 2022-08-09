@@ -1,25 +1,23 @@
-﻿using AutoMapper;
-using Bazart.API.DTO;
-using Bazart.DataAccess.Data;
+﻿using Bazart.API.DTO;
 using Bazart.Models;
 using Bazart.Services;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
 
 namespace Bazart.Controllers
 {
     [Route("api/product")]
+    [ApiController]
     public class ProductController : ControllerBase
     {
         private readonly IProductService _productService;
+
         public ProductController(IProductService productService)
         {
             _productService = productService;
         }
+
         [HttpGet]
-        //[Route("api/product")]
-        //// https://localhost:7120/api/product
-        public ActionResult<IEnumerable<ProductDto>> GetAll([FromQuery]string? like=null)
+        public ActionResult<IEnumerable<ProductDto>> GetAll([FromQuery] string? like = null)
         {
             var products = _productService.GetAllProducts();
             if (!string.IsNullOrWhiteSpace(like))
@@ -31,64 +29,33 @@ namespace Bazart.Controllers
         }
 
         [HttpGet("{id:int}")]
-        //[Route("{id:int}")]
-        public ActionResult<IEnumerable<ProductDto>> GetById([FromRoute]int id)
+        public ActionResult<IEnumerable<ProductDto>> GetById([FromRoute] int id)
         {
             var productById = _productService.GetProductById(id);
-            if (productById is null)
-            {
-                return NotFound();
-            }
-
             return Ok(productById);
         }
 
         [HttpPost]
         public ActionResult CreateProduct([FromBody] CreateProductDto create)
         {
-            if (!ModelState.IsValid)
-            {
-                return BadRequest(ModelState);
-            }
-
-            var productId  = _productService.CreateNewProduct(create);
-
-            return Created($"/api/product{productId}",null);
+            var productId = _productService.CreateNewProduct(create);
+            return Created($"/api/product{productId}", null);
         }
 
         [HttpDelete("{id:int}")]
         public ActionResult RemoveProduct([FromRoute] int id)
         {
-            if (!ModelState.IsValid)
-            {
-                return BadRequest(ModelState);
-            }
-            
-            bool isRemoveProduct = _productService.RemoveProduct(id);
-            if (!isRemoveProduct)
-            {
-                return NotFound();
-            }
-            
+            _productService.RemoveProduct(id);
+
             return NoContent();
         }
 
         [HttpPut("{id:int}")]
         public ActionResult UpdateProduct([FromRoute] int id, [FromBody] UpdateProductDto update)
         {
-            if (!ModelState.IsValid)
-            {
-                return BadRequest(ModelState);
-            }
-
-            bool isUpdated = _productService.UpdateProduct(id, update);
-            if (!isUpdated)
-            {
-                return NotFound();
-            }
+            _productService.UpdateProduct(id, update);
 
             return Ok();
         }
-
     }
 }
