@@ -41,7 +41,10 @@ seeder.Seed();
 if (app.Environment.IsDevelopment())
 {
     app.UseSwagger();
-    app.UseSwaggerUI();
+    app.UseSwaggerUI(conf =>
+    {
+        conf.SwaggerEndpoint("/swagger/v1/swagger.json", "BazartAPI");
+    });
 }
 
 app.UseMiddleware<ErrorHandlingMiddleware>();
