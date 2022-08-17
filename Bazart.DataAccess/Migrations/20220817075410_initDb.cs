@@ -4,7 +4,7 @@
 
 namespace Bazart.DataAccess.Migrations
 {
-    public partial class init : Migration
+    public partial class initDb : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -68,7 +68,8 @@ namespace Bazart.DataAccess.Migrations
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    UserId = table.Column<int>(name: "User.Id", type: "int", nullable: false)
+                    UserId = table.Column<int>(name: "User.Id", type: "int", nullable: false),
+                    ProductId = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -94,14 +95,14 @@ namespace Bazart.DataAccess.Migrations
                     isForSale = table.Column<bool>(type: "bit", nullable: false),
                     ImageUrl = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     UserId = table.Column<int>(type: "int", nullable: false),
-                    ShoppingCartId = table.Column<int>(type: "int", nullable: true)
+                    ProductId = table.Column<int>(type: "int", nullable: true)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Products", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_Products_ShoppingCarts_ShoppingCartId",
-                        column: x => x.ShoppingCartId,
+                        name: "FK_Products_ShoppingCarts_ProductId",
+                        column: x => x.ProductId,
                         principalTable: "ShoppingCarts",
                         principalColumn: "Id");
                     table.ForeignKey(
@@ -147,9 +148,9 @@ namespace Bazart.DataAccess.Migrations
                 column: "User.Id");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Products_ShoppingCartId",
+                name: "IX_Products_ProductId",
                 table: "Products",
-                column: "ShoppingCartId");
+                column: "ProductId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Products_UserId",

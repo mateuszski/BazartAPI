@@ -29,6 +29,7 @@ builder.Services.AddSwaggerGen();
 builder.Services.AddAutoMapper(Assembly.GetExecutingAssembly());
 builder.Services.AddScoped<IProductService, ProductService>();
 builder.Services.AddScoped<ErrorHandlingMiddleware>();
+builder.Services.AddCors();
 
 var app = builder.Build();
 
@@ -46,10 +47,15 @@ if (app.Environment.IsDevelopment())
         conf.SwaggerEndpoint("/swagger/v1/swagger.json", "BazartAPI");
     });
 }
+app.UseRouting();
+app.UseCors(opt => 
+{
+    opt.AllowAnyHeader().AllowAnyMethod().WithOrigins("http://localhost:3000");
+});
 
 app.UseMiddleware<ErrorHandlingMiddleware>();
 
-app.UseHttpsRedirection();
+//app.UseHttpsRedirection();
 
 app.UseAuthorization();
 
