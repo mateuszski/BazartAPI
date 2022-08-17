@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace Bazart.Models
 {
-    public class Category
+    public class Category //Owner, koszyk, chat, eventy 
     {
         [Key]
         public int Id { get; set; }

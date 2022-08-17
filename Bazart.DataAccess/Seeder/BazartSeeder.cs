@@ -18,14 +18,75 @@ namespace Bazart.DataAccess.Seeder
             {
                 if (!_dbContext.Products.Any())
                 {
-                    var products = CreateRandomProducts();
+                    var mainUser = CreateUser("Main", "Owner");
+                    var products = CreateRandomProducts(mainUser);
+                    var shoppingCartProducts = new List<Product>()
+                    {
+                        products.ElementAt(2),
+                        products.ElementAt(3),
+                        products.ElementAt(5)
+
+                    };
+                    var shoppingCart = new ShoppingCart()
+                    {
+                        User = mainUser,
+                        Products = shoppingCartProducts
+                    };
+                    _dbContext.Users.AddRange(mainUser);
                     _dbContext.Products.AddRange(products);
+                    _dbContext.Events.AddRange(CreatEvent(mainUser));
+                    _dbContext.ShoppingCarts.AddRange(shoppingCart);
                     _dbContext.SaveChanges();
                 }
             }
         }
 
-        private IEnumerable<Product> CreateRandomProducts()
+        private ShoppingCart CreateShoppingCart(User user, List<Product> products)
+        {
+            var shoppingCart = new ShoppingCart()
+            {
+                User = user,
+                Products = products
+            };
+            return shoppingCart;
+        }
+
+        private Event CreatEvent(User eventOwner)
+        {
+            Event newEvent = new Event()
+            {
+                Name = Faker.Name.FullName(),
+                Description = Faker.Lorem.Words(6).ToString(),
+                Adress = "Kraków",
+                Owner = eventOwner,
+                //ParticipantList = new List<User>()
+                //{
+                //    CreateUser("Participant1","123"),
+                //    CreateUser("Participant2","123"),
+                //    CreateUser("Participant3","123")
+                //},
+                ImageUrl = "imageUrlHere",
+            };
+            return newEvent;
+        }
+
+        private User CreateUser(string firstName, string secondName)
+        {
+            User user = new  User()
+            {
+                FirstName =firstName,
+                LastName = secondName,
+                Email = "1234@gmail.com",
+                PhoneNumber = "12345678",
+                Password = "123",
+                Products = null,
+                //Events = null,
+                ShoppingCart = null
+            };
+            return user;
+        }
+
+        private IEnumerable<Product> CreateRandomProducts(User user)
         {
             Category pictureCategory = new Category()
             {
@@ -46,7 +107,8 @@ namespace Bazart.DataAccess.Seeder
                     Categories = new List<Category>()
                     {
                         pictureCategory
-                    }
+                    },
+                    User = user
                 },
                 new Product()
                 {
@@ -59,7 +121,8 @@ namespace Bazart.DataAccess.Seeder
                     Categories = new List<Category>()
                     {
                         pictureCategory
-                    }
+                    },
+                    User = user
                 },
                 new Product()
                 {
@@ -72,7 +135,8 @@ namespace Bazart.DataAccess.Seeder
                     Categories = new List<Category>()
                     {
                         pictureCategory
-                    }
+                    },
+                    User = user
                 },
                 new Product()
                 {
@@ -89,7 +153,8 @@ namespace Bazart.DataAccess.Seeder
                             Name = Faker.Name.First(),
                             Description = Faker.Lorem.Sentence(),
                         }
-                    }
+                    },
+                    User = CreateUser("Pawel","Kowalski")
                 },
                 new Product()
                 {
@@ -106,7 +171,8 @@ namespace Bazart.DataAccess.Seeder
                             Name = Faker.Name.First(),
                             Description = Faker.Lorem.Sentence()
                         }
-                    }
+                    },
+                    User = CreateUser("Norbert","Lewandowski")
                 },
                 new Product()
                 {
@@ -123,7 +189,9 @@ namespace Bazart.DataAccess.Seeder
                             Name = Faker.Name.First(),
                             Description = Faker.Lorem.Sentence()
                         }
-                    }
+                    },
+                    User = CreateUser("Jakub","Nowak")
+
                 },new Product()
                 {
                     Name = Faker.Name.FullName(),
@@ -139,7 +207,8 @@ namespace Bazart.DataAccess.Seeder
                             Name = Faker.Name.First(),
                             Description = Faker.Lorem.Sentence()
                         }
-                    }
+                    },
+                    User = CreateUser("cos1","cos2")
                 }
             };
             return products;

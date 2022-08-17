@@ -4,6 +4,7 @@ using Bazart.DataAccess.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,10 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Bazart.DataAccess.Migrations
 {
     [DbContext(typeof(BazartDbContext))]
-    partial class BazartDbContextModelSnapshot : ModelSnapshot
+    [Migration("20220816180010_init")]
+    partial class init
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -104,10 +106,10 @@ namespace Bazart.DataAccess.Migrations
                     b.Property<decimal?>("Price")
                         .HasColumnType("decimal(18,2)");
 
-                    b.Property<int?>("ProductId")
+                    b.Property<int>("Quantity")
                         .HasColumnType("int");
 
-                    b.Property<int>("Quantity")
+                    b.Property<int?>("ShoppingCartId")
                         .HasColumnType("int");
 
                     b.Property<int>("UserId")
@@ -118,7 +120,7 @@ namespace Bazart.DataAccess.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("ProductId");
+                    b.HasIndex("ShoppingCartId");
 
                     b.HasIndex("UserId");
 
@@ -132,9 +134,6 @@ namespace Bazart.DataAccess.Migrations
                         .HasColumnType("int");
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
-
-                    b.Property<int>("ProductId")
-                        .HasColumnType("int");
 
                     b.Property<int>("User.Id")
                         .HasColumnType("int");
@@ -213,7 +212,7 @@ namespace Bazart.DataAccess.Migrations
                 {
                     b.HasOne("Bazart.Models.ShoppingCart", null)
                         .WithMany("Products")
-                        .HasForeignKey("ProductId");
+                        .HasForeignKey("ShoppingCartId");
 
                     b.HasOne("Bazart.Models.User", "User")
                         .WithMany("Products")
