@@ -5,7 +5,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace Bazart.API.Controllers
 {
-    [Route("/api/event")]
+    [Route("api/event")]
     [ApiController]
     public class EventController : ControllerBase
     {
