@@ -5,6 +5,7 @@ using System.Net.Http.Headers;
 using System.Text;
 using System.Threading.Tasks;
 using AutoMapper;
+using Bazart.API.DTO;
 using Bazart.Models;
 
 namespace Bazart.Utility
@@ -16,6 +17,7 @@ namespace Bazart.Utility
             CreateMap<Product, ProductDto>();
             CreateMap<Category, CategoryDto>();
             CreateMap<CreateProductDto, Product>();
+            CreateMap<Event, EventDto>();
         }
     }
 }
