@@ -12,10 +12,11 @@ namespace Bazart.Models
     {
         [Key]
         public int Id { get; set; }
-        [ForeignKey("User.Id")]
+        //[ForeignKey("User.Id")]
+        public int UserId { get; set; }
         public User User { get; set; }
-        public int ProductId { get; set; }
-        [ForeignKey("ProductId")]
+        //public int ProductId { get; set; }
+        //[ForeignKey("ProductId")]
         public List<Product> Products { get; set; }
     }
 }

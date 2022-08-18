@@ -4,6 +4,7 @@ using Bazart.DataAccess.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,10 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Bazart.DataAccess.Migrations
 {
     [DbContext(typeof(BazartDbContext))]
-    partial class BazartDbContextModelSnapshot : ModelSnapshot
+    [Migration("20220818082346_init30")]
+    partial class init30
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -107,9 +109,6 @@ namespace Bazart.DataAccess.Migrations
                     b.Property<int>("Quantity")
                         .HasColumnType("int");
 
-                    b.Property<int?>("ShoppingCartId")
-                        .HasColumnType("int");
-
                     b.Property<int>("UserId")
                         .HasColumnType("int");
 
@@ -117,8 +116,6 @@ namespace Bazart.DataAccess.Migrations
                         .HasColumnType("bit");
 
                     b.HasKey("Id");
-
-                    b.HasIndex("ShoppingCartId");
 
                     b.HasIndex("UserId");
 
@@ -195,21 +192,6 @@ namespace Bazart.DataAccess.Migrations
                     b.ToTable("CategoryProduct");
                 });
 
-            modelBuilder.Entity("EventUser", b =>
-                {
-                    b.Property<int>("EventsId")
-                        .HasColumnType("int");
-
-                    b.Property<int>("UsersId")
-                        .HasColumnType("int");
-
-                    b.HasKey("EventsId", "UsersId");
-
-                    b.HasIndex("UsersId");
-
-                    b.ToTable("EventUser");
-                });
-
             modelBuilder.Entity("Bazart.Models.Event", b =>
                 {
                     b.HasOne("Bazart.Models.User", "Owner")
@@ -223,10 +205,6 @@ namespace Bazart.DataAccess.Migrations
 
             modelBuilder.Entity("Bazart.Models.Product", b =>
                 {
-                    b.HasOne("Bazart.Models.ShoppingCart", null)
-                        .WithMany("Products")
-                        .HasForeignKey("ShoppingCartId");
-
                     b.HasOne("Bazart.Models.User", "User")
                         .WithMany("Products")
                         .HasForeignKey("UserId")
@@ -260,26 +238,6 @@ namespace Bazart.DataAccess.Migrations
                         .HasForeignKey("ProductsId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
-                });
-
-            modelBuilder.Entity("EventUser", b =>
-                {
-                    b.HasOne("Bazart.Models.Event", null)
-                        .WithMany()
-                        .HasForeignKey("EventsId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("Bazart.Models.User", null)
-                        .WithMany()
-                        .HasForeignKey("UsersId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-                });
-
-            modelBuilder.Entity("Bazart.Models.ShoppingCart", b =>
-                {
-                    b.Navigation("Products");
                 });
 
             modelBuilder.Entity("Bazart.Models.User", b =>

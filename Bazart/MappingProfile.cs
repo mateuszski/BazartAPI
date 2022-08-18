@@ -17,6 +17,7 @@ namespace Bazart.Utility
             CreateMap<Product, ProductDto>();
             CreateMap<Category, CategoryDto>();
             CreateMap<CreateProductDto, Product>();
+            CreateMap<CreateEventDao, Event>();
             CreateMap<Event, EventDto>();
         }
     }

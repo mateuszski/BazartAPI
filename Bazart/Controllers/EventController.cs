@@ -1,5 +1,6 @@
 ﻿using Bazart.API.DTO;
 using Bazart.API.Services;
+using Bazart.Models;
 using Bazart.Services;
 using Microsoft.AspNetCore.Mvc;
 
@@ -26,6 +27,27 @@ namespace Bazart.API.Controllers
             }
 
             return Ok(events);
+        }
+        [HttpGet("{id:int}")]
+        public ActionResult<IEnumerable<EventDto>> GetById([FromRoute] int id)
+        {
+            var eventById = _eventService.GetEventById(id);
+            return Ok(eventById);
+        }
+
+        [HttpPost]
+        public ActionResult CreateEvent([FromBody] CreateEventDao create)
+        {
+            var eventid = _eventService.CreateNewEvent(create);
+            return Created($"/api/event{eventid}", null);
+        }
+
+        [HttpDelete("{id:int}")]
+        public ActionResult RemoveEvent([FromRoute] int id)
+        {
+            _eventService.RemoveEvent(id);
+
+            return NoContent();
         }
     }
 }

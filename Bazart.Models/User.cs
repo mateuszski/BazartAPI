@@ -30,7 +30,7 @@ namespace Bazart.Models
         public List<Product> Products { get; set; }
         //[AllowNull]
         //[ForeignKey("Event.Id")]
-        //public virtual List<Event> Events { get; set; }
+        public List<Event> Events { get; set; }
         [AllowNull]
         public ShoppingCart ShoppingCart { get; set; }
 

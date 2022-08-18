@@ -27,12 +27,46 @@ namespace Bazart.API.Services
         {
             var events = _dbContext
                 .Events
-                .Include(p => p.Owner)
+                //.Include(p => p.Owner)
                 .ToList();
 
             var eventsDto = _mapper.Map<List<EventDto>>(events);
 
             return eventsDto;
+        }
+
+        public EventDto GetEventById([FromRoute] int id)
+        {
+            var eventsId = _dbContext
+                .Events
+                //.Include(p => p.Owner)
+                .FirstOrDefault(p => p.Id == id);
+            if (eventsId is null)
+            {
+                throw new NotFoundException("Event not found.");
+            }
+
+            var eventsIdDto = _mapper.Map<EventDto>(eventsId);
+            return eventsIdDto;
+        }
+
+        public int CreateNewEvent(CreateEventDao create)
+        {
+            var events = _mapper.Map<Event>(create);
+            _dbContext.Events.Add(events);
+            _dbContext.SaveChanges();
+            return events.Id;
+        }
+
+        public void RemoveEvent(int id)
+        {
+            var isRemoveEvent = _dbContext.Events.FirstOrDefault(p => p.Id == id);
+            if (isRemoveEvent is null)
+            {
+                throw new NotFoundException("Event not found");
+            }
+            _dbContext.Events.Remove(isRemoveEvent);
+            _dbContext.SaveChanges();
         }
 
     }

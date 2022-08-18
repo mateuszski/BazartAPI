@@ -1,5 +1,6 @@
 using System.Reflection;
 using Bazart.API.Middleware;
+using Bazart.API.Services;
 using Bazart.DataAccess.Data;
 using Bazart.DataAccess.Seeder;
 using Bazart.Services;
@@ -28,6 +29,7 @@ builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 builder.Services.AddAutoMapper(Assembly.GetExecutingAssembly());
 builder.Services.AddScoped<IProductService, ProductService>();
+builder.Services.AddScoped<IEventService, EventService>();
 builder.Services.AddScoped<ErrorHandlingMiddleware>();
 builder.Services.AddCors();
 

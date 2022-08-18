@@ -18,25 +18,25 @@ namespace Bazart.DataAccess.Seeder
             {
                 if (!_dbContext.Products.Any())
                 {
-                    var mainUser = CreateUser("Main", "Owner");
-                    var products = CreateRandomProducts(mainUser);
-                    var shoppingCartProducts = new List<Product>()
-                    {
-                        products.ElementAt(2),
-                        products.ElementAt(3),
-                        products.ElementAt(5)
+                    //var mainUser = CreateUser("Main", "Owner");
+                    //var products = CreateRandomProducts(mainUser);
+                    //var shoppingCartProducts = new List<Product>()
+                    //{
+                    //    products.ElementAt(2),
+                    //    products.ElementAt(3),
+                    //    products.ElementAt(5)
 
-                    };
-                    var shoppingCart = new ShoppingCart()
-                    {
-                        User = mainUser,
-                        Products = shoppingCartProducts
-                    };
-                    _dbContext.Users.AddRange(mainUser);
-                    _dbContext.Products.AddRange(products);
-                    _dbContext.Events.AddRange(CreatEvent(mainUser));
-                    _dbContext.ShoppingCarts.AddRange(shoppingCart);
-                    _dbContext.SaveChanges();
+                    //};
+                    //var shoppingCart = new ShoppingCart()
+                    //{
+                    //    User = mainUser,
+                    //    Products = shoppingCartProducts
+                    //};
+                    //_dbContext.Users.AddRange(mainUser);
+                    //_dbContext.Products.AddRange(products);
+                    //_dbContext.Events.AddRange(CreatEvent(mainUser));
+                    //_dbContext.ShoppingCarts.AddRange(shoppingCart);
+                    //_dbContext.SaveChanges();
                 }
             }
         }
@@ -45,8 +45,8 @@ namespace Bazart.DataAccess.Seeder
         {
             var shoppingCart = new ShoppingCart()
             {
-                User = user,
-                Products = products
+                //User = user,
+                //Products = products
             };
             return shoppingCart;
         }
@@ -58,8 +58,8 @@ namespace Bazart.DataAccess.Seeder
                 Name = Faker.Name.FullName(),
                 Description = Faker.Lorem.Words(6).ToString(),
                 Adress = "Kraków",
-                Owner = eventOwner,
-                //ParticipantList = new List<User>()
+                //Owner = eventOwner,
+                //Users = new List<User>()
                 //{
                 //    CreateUser("Participant1","123"),
                 //    CreateUser("Participant2","123"),
