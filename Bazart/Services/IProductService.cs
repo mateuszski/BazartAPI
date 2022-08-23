@@ -11,4 +11,6 @@ public interface IProductService
     int CreateNewProduct(CreateProductDto create);
     void RemoveProduct(int id);
     void UpdateProduct(int id, UpdateProductDto update);
+    IEnumerable<ProductDto> GetProductsByUserId([FromRoute] int id);
+    IEnumerable<ProductDto> GetLatestProducts();
 }

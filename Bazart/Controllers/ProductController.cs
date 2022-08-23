@@ -35,6 +35,14 @@ namespace Bazart.Controllers
             return Ok(productById);
         }
 
+        [HttpGet("user/{id:int}")]
+        public ActionResult<IEnumerable<ProductDto>> GetProductsByUserId([FromRoute] int id)
+        {
+            Console.WriteLine("test");
+            var productsByUserId = _productService.GetProductsByUserId(id);
+            return Ok(productsByUserId);
+        }
+
         [HttpPost]
         public ActionResult CreateProduct([FromBody] CreateProductDto create)
         {
@@ -56,6 +64,13 @@ namespace Bazart.Controllers
             _productService.UpdateProduct(id, update);
 
             return Ok();
+        }
+
+        [HttpGet("latest")]
+        public ActionResult<IEnumerable<ProductDto>> LatestProducts()
+        {
+            var latestProducts = _productService.GetLatestProducts();
+            return Ok(latestProducts);
         }
     }
 }

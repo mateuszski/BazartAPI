@@ -47,6 +47,32 @@ namespace Bazart.Services
             return productsIdDto;
         }
 
+        public IEnumerable<ProductDto> GetProductsByUserId([FromRoute] int id)
+        {
+            var productsByUserId = _dbContext
+                .Products
+                .Include(p => p.Categories)
+                .Where(p => p.User.Id == id);
+            if (productsByUserId is null)
+            {
+                throw new NotFoundException("Product not found.");
+            }
+            var productsByUserIdDto = _mapper.Map<List<ProductDto>>(productsByUserId);
+            return productsByUserIdDto;
+        }
+
+        public IEnumerable<ProductDto> GetLatestProducts()
+        {
+            var latestProducts = _dbContext
+                .Products
+                .Include(p => p.Categories)
+                .OrderByDescending(p => p.Id)
+                .Take(2);
+            var latestProductsDto = _mapper.Map<List<ProductDto>>(latestProducts);
+
+            return latestProductsDto;
+        }
+        
         public int CreateNewProduct(CreateProductDto create)
         {
             var product = _mapper.Map<Product>(create);
@@ -82,5 +108,6 @@ namespace Bazart.Services
             product.ImageUrl = update.ImageUrl;
             _dbContext.SaveChanges();
         }
+        
     }
 }
