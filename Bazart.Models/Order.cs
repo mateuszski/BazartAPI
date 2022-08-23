@@ -8,15 +8,13 @@ using System.Threading.Tasks;
 
 namespace Bazart.Models
 {
-    public class ShoppingCart
+    public class Order
     {
         [Key]
         public int Id { get; set; }
-        //[ForeignKey("User.Id")]
         public int UserId { get; set; }
         public User User { get; set; }
-        //public int ProductId { get; set; }
-        //[ForeignKey("ProductId")]
-        public List<Product> Products { get; set; }
+        public List<OrderProduct> OrderProducts { get; set; }
+        public DateTime OrderDate { get; set; }
     }
 }

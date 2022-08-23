@@ -31,6 +31,7 @@ namespace Bazart.Models
         [ValidateNever]
         public string ImageUrl { get; set; }
         public User User { get; set; }
-        public virtual List<Category> Categories { get; set; }
+        public List<Category> Categories { get; set; }
+        public List<OrderProduct> OrderProducts { get; set; } //niepo
     }
 }

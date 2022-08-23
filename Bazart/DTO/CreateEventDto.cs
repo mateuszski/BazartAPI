@@ -4,7 +4,7 @@ using Bazart.Models;
 
 namespace Bazart.API.DTO
 {
-    public class CreateEventDao
+    public class CreateEventDto
     {
         [Required]
         [MaxLength(50)]
@@ -15,12 +15,6 @@ namespace Bazart.API.DTO
         [Required]
         [MaxLength(100)]
         public string Adress { get; set; }
-        //[ForeignKey("User.Id")]
-        [AllowNull]
-        //public User Owner { get; set; }
-        //[AllowNull]
-        //[ForeignKey("Owner.Id")]
-        //public virtual List<User> Users { get; set; }
         public string ImageUrl { get; set; }
     }
 }

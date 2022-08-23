@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Bazart.DataAccess.Migrations
 {
     [DbContext(typeof(BazartDbContext))]
-    [Migration("20220818084535_init32")]
-    partial class init32
+    [Migration("20220822191256_initial")]
+    partial class initial
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -71,9 +71,50 @@ namespace Bazart.DataAccess.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<int>("OwnerId")
+                        .HasColumnType("int");
+
                     b.HasKey("Id");
 
+                    b.HasIndex("OwnerId");
+
                     b.ToTable("Events");
+                });
+
+            modelBuilder.Entity("Bazart.Models.Order", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
+
+                    b.Property<DateTime>("OrderDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<int>("UserId")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("UserId");
+
+                    b.ToTable("Orders");
+                });
+
+            modelBuilder.Entity("Bazart.Models.OrderProduct", b =>
+                {
+                    b.Property<int>("OrderId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("ProductId")
+                        .HasColumnType("int");
+
+                    b.HasKey("OrderId", "ProductId");
+
+                    b.HasIndex("ProductId");
+
+                    b.ToTable("OrderProducts");
                 });
 
             modelBuilder.Entity("Bazart.Models.Product", b =>
@@ -104,9 +145,6 @@ namespace Bazart.DataAccess.Migrations
                     b.Property<int>("Quantity")
                         .HasColumnType("int");
 
-                    b.Property<int?>("ShoppingCartId")
-                        .HasColumnType("int");
-
                     b.Property<int>("UserId")
                         .HasColumnType("int");
 
@@ -115,30 +153,9 @@ namespace Bazart.DataAccess.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("ShoppingCartId");
-
                     b.HasIndex("UserId");
 
                     b.ToTable("Products");
-                });
-
-            modelBuilder.Entity("Bazart.Models.ShoppingCart", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
-
-                    b.Property<int>("UserId")
-                        .HasColumnType("int");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("UserId")
-                        .IsUnique();
-
-                    b.ToTable("ShoppingCarts");
                 });
 
             modelBuilder.Entity("Bazart.Models.User", b =>
@@ -207,14 +224,21 @@ namespace Bazart.DataAccess.Migrations
                     b.ToTable("EventUser");
                 });
 
-            modelBuilder.Entity("Bazart.Models.Product", b =>
+            modelBuilder.Entity("Bazart.Models.Event", b =>
                 {
-                    b.HasOne("Bazart.Models.ShoppingCart", null)
-                        .WithMany("Products")
-                        .HasForeignKey("ShoppingCartId");
+                    b.HasOne("Bazart.Models.User", "Owner")
+                        .WithMany("OwnedEvents")
+                        .HasForeignKey("OwnerId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
 
+                    b.Navigation("Owner");
+                });
+
+            modelBuilder.Entity("Bazart.Models.Order", b =>
+                {
                     b.HasOne("Bazart.Models.User", "User")
-                        .WithMany("Products")
+                        .WithMany("Orders")
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
@@ -222,11 +246,30 @@ namespace Bazart.DataAccess.Migrations
                     b.Navigation("User");
                 });
 
-            modelBuilder.Entity("Bazart.Models.ShoppingCart", b =>
+            modelBuilder.Entity("Bazart.Models.OrderProduct", b =>
+                {
+                    b.HasOne("Bazart.Models.Order", "Order")
+                        .WithMany("OrderProducts")
+                        .HasForeignKey("OrderId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("Bazart.Models.Product", "Product")
+                        .WithMany("OrderProducts")
+                        .HasForeignKey("ProductId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.Navigation("Order");
+
+                    b.Navigation("Product");
+                });
+
+            modelBuilder.Entity("Bazart.Models.Product", b =>
                 {
                     b.HasOne("Bazart.Models.User", "User")
-                        .WithOne("ShoppingCart")
-                        .HasForeignKey("Bazart.Models.ShoppingCart", "UserId")
+                        .WithMany("Products")
+                        .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
@@ -263,17 +306,23 @@ namespace Bazart.DataAccess.Migrations
                         .IsRequired();
                 });
 
-            modelBuilder.Entity("Bazart.Models.ShoppingCart", b =>
+            modelBuilder.Entity("Bazart.Models.Order", b =>
                 {
-                    b.Navigation("Products");
+                    b.Navigation("OrderProducts");
+                });
+
+            modelBuilder.Entity("Bazart.Models.Product", b =>
+                {
+                    b.Navigation("OrderProducts");
                 });
 
             modelBuilder.Entity("Bazart.Models.User", b =>
                 {
-                    b.Navigation("Products");
+                    b.Navigation("Orders");
 
-                    b.Navigation("ShoppingCart")
-                        .IsRequired();
+                    b.Navigation("OwnedEvents");
+
+                    b.Navigation("Products");
                 });
 #pragma warning restore 612, 618
         }

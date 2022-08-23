@@ -27,7 +27,7 @@ namespace Bazart.API.Services
         {
             var events = _dbContext
                 .Events
-                //.Include(p => p.Owner)
+                .Include(p => p.Owner)
                 .ToList();
 
             var eventsDto = _mapper.Map<List<EventDto>>(events);
@@ -39,7 +39,7 @@ namespace Bazart.API.Services
         {
             var eventsId = _dbContext
                 .Events
-                //.Include(p => p.Owner)
+                .Include(p => p.Owner)
                 .FirstOrDefault(p => p.Id == id);
             if (eventsId is null)
             {
@@ -50,7 +50,7 @@ namespace Bazart.API.Services
             return eventsIdDto;
         }
 
-        public int CreateNewEvent(CreateEventDao create)
+        public int CreateNewEvent(CreateEventDto create)
         {
             var events = _mapper.Map<Event>(create);
             _dbContext.Events.Add(events);
@@ -66,6 +66,21 @@ namespace Bazart.API.Services
                 throw new NotFoundException("Event not found");
             }
             _dbContext.Events.Remove(isRemoveEvent);
+            _dbContext.SaveChanges();
+        }
+
+        public void UpdateEvent(int id, UpdateEventDto update)
+        {
+            var eventUpdateData = _dbContext.Events.FirstOrDefault(e => e.Id == id);
+            if (eventUpdateData is null)
+            {
+                throw new NotFoundException("Product not found");
+            }
+
+            eventUpdateData.Name = update.Name;
+            eventUpdateData.Description = update.Description;
+            eventUpdateData.Adress = update.Adress;
+            eventUpdateData.ImageUrl = update.ImageUrl;
             _dbContext.SaveChanges();
         }
 

@@ -8,7 +8,8 @@ namespace Bazart.API.Services
     {
         IEnumerable<EventDto> GetAllEvents();
         EventDto GetEventById([FromRoute] int id);
-        int CreateNewEvent(CreateEventDao create);
+        int CreateNewEvent(CreateEventDto create);
         void RemoveEvent(int id);
+        void UpdateEvent(int id, UpdateEventDto update);
     }
 }

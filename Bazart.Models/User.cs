@@ -28,11 +28,10 @@ namespace Bazart.Models
         public string Password { get; set; }
         [AllowNull]
         public List<Product> Products { get; set; }
-        //[AllowNull]
-        //[ForeignKey("Event.Id")]
+        public List<Event> OwnedEvents { get; set; }
         public List<Event> Events { get; set; }
         [AllowNull]
-        public ShoppingCart ShoppingCart { get; set; }
+        public List<Order> Orders { get; set; }
 
     }
 }

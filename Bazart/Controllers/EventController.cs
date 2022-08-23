@@ -36,7 +36,7 @@ namespace Bazart.API.Controllers
         }
 
         [HttpPost]
-        public ActionResult CreateEvent([FromBody] CreateEventDao create)
+        public ActionResult CreateEvent([FromBody] CreateEventDto create)
         {
             var eventid = _eventService.CreateNewEvent(create);
             return Created($"/api/event{eventid}", null);
@@ -48,6 +48,14 @@ namespace Bazart.API.Controllers
             _eventService.RemoveEvent(id);
 
             return NoContent();
+        }
+
+        [HttpPut("{id:int}")]
+        public ActionResult UpdateEvent([FromRoute] int id, [FromBody] UpdateEventDto update)
+        {
+            _eventService.UpdateEvent(id, update);
+
+            return Ok();
         }
     }
 }
