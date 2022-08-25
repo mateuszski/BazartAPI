@@ -30,6 +30,7 @@ builder.Services.AddSwaggerGen();
 builder.Services.AddAutoMapper(Assembly.GetExecutingAssembly());
 builder.Services.AddScoped<IProductService, ProductService>();
 builder.Services.AddScoped<IEventService, EventService>();
+builder.Services.AddScoped<IOrderService, OrderService>();
 builder.Services.AddScoped<ErrorHandlingMiddleware>();
 builder.Services.AddCors();
 
