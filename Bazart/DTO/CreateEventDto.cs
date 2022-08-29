@@ -16,5 +16,6 @@ namespace Bazart.API.DTO
         [MaxLength(100)]
         public string Adress { get; set; }
         public string ImageUrl { get; set; }
+        public int OwnerId { get; set; }
     }
 }
