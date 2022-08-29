@@ -3,7 +3,6 @@ using Bazart.API.Middleware;
 using Bazart.API.Services;
 using Bazart.DataAccess.Data;
 using Bazart.DataAccess.Seeder;
-using Bazart.Services;
 using Microsoft.EntityFrameworkCore;
 using NLog;
 using Microsoft.IdentityModel.Tokens;
@@ -41,6 +40,7 @@ builder.Services.AddAutoMapper(Assembly.GetExecutingAssembly());
 builder.Services.AddScoped<IProductService, ProductService>();
 builder.Services.AddScoped<IEventService, EventService>();
 builder.Services.AddScoped<IOrderService, OrderService>();
+builder.Services.AddScoped<ICategoryService, CategoryService>();
 builder.Services.AddScoped<ErrorHandlingMiddleware>();
 builder.Services.AddCors();
 
@@ -61,7 +61,7 @@ if (app.Environment.IsDevelopment())
     });
 }
 app.UseRouting();
-app.UseCors(opt => 
+app.UseCors(opt =>
 {
     opt.AllowAnyHeader().AllowAnyMethod().WithOrigins("http://localhost:3000");
 });

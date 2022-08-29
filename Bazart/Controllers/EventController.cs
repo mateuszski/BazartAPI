@@ -1,7 +1,6 @@
 ﻿using Bazart.API.DTO;
 using Bazart.API.Services;
 using Bazart.Models;
-using Bazart.Services;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Bazart.API.Controllers
@@ -28,6 +27,7 @@ namespace Bazart.API.Controllers
 
             return Ok(events);
         }
+
         [HttpGet("{id:int}")]
         public ActionResult<IEnumerable<EventDto>> GetById([FromRoute] int id)
         {

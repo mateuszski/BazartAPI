@@ -1,13 +1,12 @@
 ﻿using AutoMapper;
 using Bazart.API.DTO;
 using Bazart.API.Exceptions;
-using Bazart.Controllers;
 using Bazart.DataAccess.Data;
 using Bazart.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
-namespace Bazart.Services
+namespace Bazart.API.Services
 {
     public class ProductService : IProductService
     {
@@ -72,7 +71,7 @@ namespace Bazart.Services
 
             return latestProductsDto;
         }
-        
+
         public int CreateNewProduct(CreateProductDto create)
         {
             var product = _mapper.Map<Product>(create);
@@ -108,6 +107,5 @@ namespace Bazart.Services
             product.ImageUrl = update.ImageUrl;
             _dbContext.SaveChanges();
         }
-        
     }
 }
