@@ -14,7 +14,7 @@ namespace Bazart.API.DTO
         public string ImageUrl { get; set; }
         public int OwnerId { get; set; }
         //public User Owner { get; set; }
-        [AllowNull]
-        public List<User> Users { get; set; }
+        //[AllowNull]
+        //public List<User> Users { get; set; }
     }
 }
