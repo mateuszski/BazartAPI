@@ -19,8 +19,7 @@ namespace Bazart.API.Services
             _mapper = mapper;
         }
 
-        [HttpGet]
-        public OrderDto GetOrderById([FromRoute] int id)
+        public OrderDto GetOrderById( int id)
         {
             var orderId = _dbContext
                 .Orders

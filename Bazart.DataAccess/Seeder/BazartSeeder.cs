@@ -39,24 +39,30 @@ namespace Bazart.DataAccess.Seeder
                     _dbContext.Products.AddRange(products);
                     _dbContext.Events.AddRange(CreatEvent(mainUser));
                     _dbContext.Orders.AddRange(order);
-                    //_dbContext.OrderProducts.AddRange(CreateOrderProduct());
+                    _dbContext.SaveChanges();
+                    _dbContext.OrderProducts.AddRange(CreateOrderProduct(products, 1));
                     _dbContext.SaveChanges();
                 }
             }
         }
 
-        public List<OrderProduct> CreateOrderProduct(List<Product> orderedProducts, int orderId)
+        public OrderProduct CreateOrderProduct(IEnumerable<Product> orderedProducts, int orderId)
         {
-            var orderProducts = new List<OrderProduct>();
-            foreach (var product in orderedProducts)
+            //var orderProducts = new List<OrderProduct>();
+            //foreach (var product in orderedProducts)
+            //{
+            //    var newOrderProduct = new OrderProduct()
+            //    {
+            //        OrderId = orderId,
+            //        ProductId = product.Id
+            //    };
+            //    orderProducts.Add(newOrderProduct);
+            //}
+            OrderProduct orderProducts = new OrderProduct()
             {
-                var newOrderProduct = new OrderProduct()
-                {
-                    //OrderId = orderId,
-                    ProductId = product.Id
-                };
-                orderProducts.Add(newOrderProduct);
-            }
+                OrderId = 1,
+                ProductId = 1
+            };
             return orderProducts;
         }
 
@@ -66,8 +72,8 @@ namespace Bazart.DataAccess.Seeder
             {
                 User = user,
                 OrderDate = DateTime.Now,
-                //OrderProducts = CreateOrderProduct();
-            };
+                OrderProducts = new List<OrderProduct>()
+        };
             return order;
         }
 

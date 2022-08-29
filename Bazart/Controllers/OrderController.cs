@@ -16,7 +16,7 @@ namespace Bazart.API.Controllers
         }
 
         [HttpGet("{id:int}")]
-        public ActionResult<OrderDto> GetOrderById([FromRoute] int id)
+        public ActionResult<OrderDto> GetOrderById( int id)
         {
             var orderById = _eventService.GetOrderById(id);
             return Ok(orderById);

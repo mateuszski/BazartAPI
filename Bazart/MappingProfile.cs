@@ -20,6 +20,7 @@ namespace Bazart.Utility
             CreateMap<CreateEventDto, Event>();
             CreateMap<Event, EventDto>();
             CreateMap<Order, OrderDto>();
+                //.ForMember(o => o.UserId, u => u.MapFrom(k => k.User.Id));
             CreateMap<OrderDto, Order>();
         }
     }
