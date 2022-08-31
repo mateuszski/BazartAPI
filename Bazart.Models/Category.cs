@@ -7,16 +7,20 @@ using System.Threading.Tasks;
 
 namespace Bazart.Models
 {
-    public class Category //Owner, koszyk, chat, eventy 
+    public class Category //Owner, koszyk, chat, eventy
     {
         [Key]
         public int Id { get; set; }
+
         [Display(Name = "Category")]
         [Required]
         [MaxLength(50)]
         public string Name { get; set; }
+
         [MaxLength(300)]
         public string Description { get; set; }
+
+        public string ImageUrl { get; set; }
         public virtual List<Product> Products { get; set; }
     }
 }

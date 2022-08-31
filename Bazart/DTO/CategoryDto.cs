@@ -9,7 +9,11 @@ namespace Bazart.Models
 {
     public class CategoryDto
     {
+        public int Id { get; set; }
+
         [Display(Name = "Category")]
         public string Name { get; set; }
+
+        public string ImageUrl { get; set; }
     }
 }
