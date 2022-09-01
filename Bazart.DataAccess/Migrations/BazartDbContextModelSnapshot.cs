@@ -69,6 +69,12 @@ namespace Bazart.DataAccess.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<decimal?>("MapLat")
+                        .HasColumnType("decimal(18,2)");
+
+                    b.Property<decimal?>("MapLng")
+                        .HasColumnType("decimal(18,2)");
+
                     b.Property<string>("Name")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");

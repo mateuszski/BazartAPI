@@ -92,6 +92,8 @@ namespace Bazart.DataAccess.Seeder
                     CreateUser("Participant3","123")
                 },
                 ImageUrl = "imageUrlHere",
+                MapLat = 44,
+                MapLng = -80
             };
             return newEvent;
         }
