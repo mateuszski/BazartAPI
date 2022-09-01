@@ -30,6 +30,7 @@ namespace Bazart.Models
         //[Display(Name = "Art Picture")] przy widoku
         [ValidateNever]
         public string ImageUrl { get; set; }
+        public int UserId { get; set; }
         public User User { get; set; }
         public List<Category> Categories { get; set; }
         public List<OrderProduct> OrderProducts { get; set; } //niepo
