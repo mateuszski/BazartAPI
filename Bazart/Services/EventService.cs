@@ -82,6 +82,8 @@ namespace Bazart.API.Services
             eventUpdateData.Description = update.Description;
             eventUpdateData.Adress = update.Adress;
             eventUpdateData.ImageUrl = update.ImageUrl;
+            eventUpdateData.MapLat = update.MapLat;
+            eventUpdateData.MapLng = update.MapLng;
             _dbContext.SaveChanges();
         }
 
