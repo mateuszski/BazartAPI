@@ -12,7 +12,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Bazart.DataAccess.Migrations
 {
     [DbContext(typeof(BazartDbContext))]
-    [Migration("20220901072453_init")]
+    [Migration("20220901074023_init")]
     partial class init
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
