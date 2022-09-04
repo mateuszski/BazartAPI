@@ -39,24 +39,30 @@ namespace Bazart.DataAccess.Seeder
                     _dbContext.Products.AddRange(products);
                     _dbContext.Events.AddRange(CreatEvent(mainUser));
                     _dbContext.Orders.AddRange(order);
-                    //_dbContext.OrderProducts.AddRange(CreateOrderProduct());
+                    _dbContext.SaveChanges();
+                    _dbContext.OrderProducts.AddRange(CreateOrderProduct(products, 1));
                     _dbContext.SaveChanges();
                 }
             }
         }
 
-        public List<OrderProduct> CreateOrderProduct(List<Product> orderedProducts, int orderId)
+        public OrderProduct CreateOrderProduct(IEnumerable<Product> orderedProducts, int orderId)
         {
-            var orderProducts = new List<OrderProduct>();
-            foreach (var product in orderedProducts)
+            //var orderProducts = new List<OrderProduct>();
+            //foreach (var product in orderedProducts)
+            //{
+            //    var newOrderProduct = new OrderProduct()
+            //    {
+            //        OrderId = orderId,
+            //        ProductId = product.Id
+            //    };
+            //    orderProducts.Add(newOrderProduct);
+            //}
+            OrderProduct orderProducts = new OrderProduct()
             {
-                var newOrderProduct = new OrderProduct()
-                {
-                    //OrderId = orderId,
-                    ProductId = product.Id
-                };
-                orderProducts.Add(newOrderProduct);
-            }
+                OrderId = 1,
+                ProductId = 1
+            };
             return orderProducts;
         }
 
@@ -66,7 +72,7 @@ namespace Bazart.DataAccess.Seeder
             {
                 User = user,
                 OrderDate = DateTime.Now,
-                //OrderProducts = CreateOrderProduct();
+                OrderProducts = new List<OrderProduct>()
             };
             return order;
         }
@@ -86,15 +92,17 @@ namespace Bazart.DataAccess.Seeder
                     CreateUser("Participant3","123")
                 },
                 ImageUrl = "imageUrlHere",
+                MapLat = 44,
+                MapLng = -80
             };
             return newEvent;
         }
 
         private User CreateUser(string firstName, string secondName)
         {
-            User user = new  User()
+            User user = new User()
             {
-                FirstName =firstName,
+                FirstName = firstName,
                 LastName = secondName,
                 Email = "1234@gmail.com",
                 PhoneNumber = "12345678",
@@ -110,8 +118,40 @@ namespace Bazart.DataAccess.Seeder
         {
             Category pictureCategory = new Category()
             {
-                Name = "Obraz",
-                Description = Faker.Lorem.Sentence()
+                Name = "Malarstwo",
+                Description = Faker.Lorem.Sentence(),
+                ImageUrl = "http://picsum.photos/200"
+            };
+
+            Category sculptureCategory = new Category()
+            {
+                Name = "Rzeźba",
+                Description = Faker.Lorem.Sentence(),
+                ImageUrl = "http://picsum.photos/200"
+            };
+            Category fotographyCategory = new Category()
+            {
+                Name = "Fotografia",
+                Description = Faker.Lorem.Sentence(),
+                ImageUrl = "http://picsum.photos/200"
+            };
+            Category handMadeCategory = new Category()
+            {
+                Name = "Rękodzieło",
+                Description = Faker.Lorem.Sentence(),
+                ImageUrl = "http://picsum.photos/200"
+            };
+            Category graphicArtsCategory = new Category()
+            {
+                Name = "Grafika Komputerowa",
+                Description = Faker.Lorem.Sentence(),
+                ImageUrl = "http://picsum.photos/200"
+            };
+            Category otherCategory = new Category()
+            {
+                Name = "Inne",
+                Description = Faker.Lorem.Sentence(),
+                ImageUrl = "http://picsum.photos/200"
             };
 
             var products = new List<Product>()
@@ -141,7 +181,7 @@ namespace Bazart.DataAccess.Seeder
                     ImageUrl = Faker.Internet.Url(),
                     Categories = new List<Category>()
                     {
-                        pictureCategory
+                        sculptureCategory
                     },
                     OrderProducts = new List<OrderProduct>(),
                     User = user
@@ -156,7 +196,52 @@ namespace Bazart.DataAccess.Seeder
                     ImageUrl = Faker.Internet.Url(),
                     Categories = new List<Category>()
                     {
-                        pictureCategory
+                        fotographyCategory
+                    },
+                    OrderProducts = new List<OrderProduct>(),
+                    User = user
+                },
+                new Product()
+                {
+                    Name = Faker.Name.FullName(),
+                    Description = Faker.Lorem.Sentence(),
+                    Price = Faker.Finance.Coupon(),
+                    Quantity = Faker.RandomNumber.Next(1, 10),
+                    isForSale = Faker.Boolean.Random(),
+                    ImageUrl = Faker.Internet.Url(),
+                    Categories = new List<Category>()
+                    {
+                        handMadeCategory
+                    },
+                    OrderProducts = new List<OrderProduct>(),
+                    User = user
+                },
+                new Product()
+                {
+                    Name = Faker.Name.FullName(),
+                    Description = Faker.Lorem.Sentence(),
+                    Price = Faker.Finance.Coupon(),
+                    Quantity = Faker.RandomNumber.Next(1, 10),
+                    isForSale = Faker.Boolean.Random(),
+                    ImageUrl = Faker.Internet.Url(),
+                    Categories = new List<Category>()
+                    {
+                        graphicArtsCategory
+                    },
+                    OrderProducts = new List<OrderProduct>(),
+                    User = user
+                },
+                new Product()
+                {
+                    Name = Faker.Name.FullName(),
+                    Description = Faker.Lorem.Sentence(),
+                    Price = Faker.Finance.Coupon(),
+                    Quantity = Faker.RandomNumber.Next(1, 10),
+                    isForSale = Faker.Boolean.Random(),
+                    ImageUrl = Faker.Internet.Url(),
+                    Categories = new List<Category>()
+                    {
+                        otherCategory
                     },
                     OrderProducts = new List<OrderProduct>(),
                     User = user

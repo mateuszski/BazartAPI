@@ -3,10 +3,10 @@ using Bazart.API.Middleware;
 using Bazart.API.Services;
 using Bazart.DataAccess.Data;
 using Bazart.DataAccess.Seeder;
-using Bazart.Services;
 using Microsoft.EntityFrameworkCore;
 using NLog;
 using Microsoft.IdentityModel.Tokens;
+using Newtonsoft.Json.Serialization;
 using NLog.Web;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -21,7 +21,16 @@ builder.Host.UseNLog();
 builder.Services.AddDbContext<BazartDbContext>(options => options.UseSqlServer(
     builder.Configuration.GetConnectionString("DatabaseConnection")));
 builder.Services.AddScoped<BazartSeeder>();
-builder.Services.AddControllers();
+builder.Services.AddControllers()
+    //{
+    //    options.ReturnHttpNotAcceptable = true;
+    //})
+    .AddNewtonsoftJson(settings =>
+    {
+        settings.SerializerSettings.ContractResolver = new CamelCasePropertyNamesContractResolver();
+        settings.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore;
+    })
+    .AddXmlDataContractSerializerFormatters();
 builder.Services.AddMvc();
 builder.Services.AddMvcCore();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
@@ -30,6 +39,8 @@ builder.Services.AddSwaggerGen();
 builder.Services.AddAutoMapper(Assembly.GetExecutingAssembly());
 builder.Services.AddScoped<IProductService, ProductService>();
 builder.Services.AddScoped<IEventService, EventService>();
+builder.Services.AddScoped<IOrderService, OrderService>();
+builder.Services.AddScoped<ICategoryService, CategoryService>();
 builder.Services.AddScoped<ErrorHandlingMiddleware>();
 builder.Services.AddCors();
 
@@ -50,7 +61,7 @@ if (app.Environment.IsDevelopment())
     });
 }
 app.UseRouting();
-app.UseCors(opt => 
+app.UseCors(opt =>
 {
     opt.AllowAnyHeader().AllowAnyMethod().WithOrigins("http://localhost:3000");
 });

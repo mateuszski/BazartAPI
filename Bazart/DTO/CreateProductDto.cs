@@ -22,6 +22,7 @@ namespace Bazart.Models
         public decimal? Price { get; set; }
         //[Required]
         public int Quantity { get; set; }
+        public int UserId { get; set; }
         [Required]
         public bool isForSale { get; set; }
         [Required]

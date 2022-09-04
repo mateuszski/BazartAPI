@@ -1,14 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Net.Http.Headers;
-using System.Text;
-using System.Threading.Tasks;
-using AutoMapper;
+﻿using AutoMapper;
 using Bazart.API.DTO;
 using Bazart.Models;
 
-namespace Bazart.Utility
+namespace Bazart.API
 {
     public class MappingProfile : Profile
     {
@@ -19,8 +13,9 @@ namespace Bazart.Utility
             CreateMap<CreateProductDto, Product>();
             CreateMap<CreateEventDto, Event>();
             CreateMap<Event, EventDto>();
-            CreateMap<User, UserDto>();
-            CreateMap<UserDto, User>();
+            CreateMap<Order, OrderDto>();
+            //.ForMember(o => o.UserId, u => u.MapFrom(k => k.User.Id));
+            CreateMap<OrderDto, Order>();
         }
     }
 }
