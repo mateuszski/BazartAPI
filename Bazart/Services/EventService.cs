@@ -27,7 +27,7 @@ namespace Bazart.API.Services
         {
             var events = _dbContext
                 .Events
-                .Include(p => p.Owner)
+                //.Include(e => e.Owner)
                 .ToList();
 
             var eventsDto = _mapper.Map<List<EventDto>>(events);

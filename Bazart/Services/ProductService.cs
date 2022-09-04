@@ -25,6 +25,7 @@ namespace Bazart.Services
             var products = _dbContext
                .Products
                .Include(p => p.Categories)
+               //.Include(p => p.User)
                .ToList();
 
             var productsDto = _mapper.Map<List<ProductDto>>(products);

@@ -29,5 +29,6 @@ namespace Bazart.Models
         [ValidateNever]
         public string ImageUrl { get; set; }
         public List<CategoryDto> Categories { get; set; }
+        public User User { get; set; }
     }
 }
