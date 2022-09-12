@@ -120,38 +120,38 @@ namespace Bazart.DataAccess.Seeder
             {
                 Name = "Malarstwo",
                 Description = Faker.Lorem.Sentence(),
-                ImageUrl = "http://picsum.photos/200"
+                ImageUrl = "https://source.unsplash.com/random/1"
             };
 
             Category sculptureCategory = new Category()
             {
                 Name = "Rzeźba",
                 Description = Faker.Lorem.Sentence(),
-                ImageUrl = "http://picsum.photos/200"
+                ImageUrl = "https://source.unsplash.com/random/2"
             };
             Category fotographyCategory = new Category()
             {
                 Name = "Fotografia",
                 Description = Faker.Lorem.Sentence(),
-                ImageUrl = "http://picsum.photos/200"
+                ImageUrl = "https://source.unsplash.com/random/3"
             };
             Category handMadeCategory = new Category()
             {
                 Name = "Rękodzieło",
                 Description = Faker.Lorem.Sentence(),
-                ImageUrl = "http://picsum.photos/200"
+                ImageUrl = "https://source.unsplash.com/random/4"
             };
             Category graphicArtsCategory = new Category()
             {
                 Name = "Grafika Komputerowa",
                 Description = Faker.Lorem.Sentence(),
-                ImageUrl = "http://picsum.photos/200"
+                ImageUrl = "https://source.unsplash.com/random/5"
             };
             Category otherCategory = new Category()
             {
                 Name = "Inne",
                 Description = Faker.Lorem.Sentence(),
-                ImageUrl = "http://picsum.photos/200"
+                ImageUrl = "https://source.unsplash.com/random/6"
             };
 
             var products = new List<Product>()
