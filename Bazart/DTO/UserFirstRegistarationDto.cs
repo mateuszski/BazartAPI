@@ -1,10 +1,8 @@
 ﻿using System.ComponentModel.DataAnnotations;
-using System.Diagnostics.CodeAnalysis;
-using Bazart.Models;
 
 namespace Bazart.API.DTO
 {
-    public class UserDto
+    public class UserFirstRegistarationDto
     {
         [Required]
         [MaxLength(50)]
@@ -18,13 +16,7 @@ namespace Bazart.API.DTO
         [Required]
         public string PhoneNumber { get; set; }
         [Required]
-        public string Password { get; set; }
-
-        //[AllowNull]
-        //public List<Product> Products { get; set; }
-        //public List<Event> OwnedEvents { get; set; }
-        //public List<Event> Events { get; set; }
-        //[AllowNull]
-        //public List<Order> Orders { get; set; }
+        public byte[] PasswordHash { get; set; }
+        public byte[] PasswordSalt { get; set; }
     }
 }

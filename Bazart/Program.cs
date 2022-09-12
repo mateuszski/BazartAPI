@@ -40,6 +40,7 @@ builder.Services.AddAutoMapper(Assembly.GetExecutingAssembly());
 builder.Services.AddScoped<IProductService, ProductService>();
 builder.Services.AddScoped<IEventService, EventService>();
 builder.Services.AddScoped<IOrderService, OrderService>();
+builder.Services.AddScoped<IUserService, UserService>();
 builder.Services.AddScoped<ICategoryService, CategoryService>();
 builder.Services.AddScoped<ErrorHandlingMiddleware>();
 builder.Services.AddCors();

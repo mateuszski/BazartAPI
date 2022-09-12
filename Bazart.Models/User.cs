@@ -25,7 +25,8 @@ namespace Bazart.Models
         [Required]
         public string PhoneNumber { get; set; }
         [Required]
-        public string Password { get; set; }
+        public byte[] PasswordHash { get; set; }
+        public byte[] PasswordSalt { get; set; }
         [AllowNull]
         public List<Product> Products { get; set; }
         public List<Event> OwnedEvents { get; set; }

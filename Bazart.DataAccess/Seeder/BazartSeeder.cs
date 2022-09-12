@@ -1,4 +1,5 @@
-﻿using Bazart.DataAccess.Data;
+﻿using System.Text;
+using Bazart.DataAccess.Data;
 using Bazart.Models;
 
 namespace Bazart.DataAccess.Seeder
@@ -36,8 +37,11 @@ namespace Bazart.DataAccess.Seeder
                         OrderDate = DateTime.Now
                     };
                     _dbContext.Users.AddRange(mainUser);
+                    _dbContext.SaveChanges();
                     _dbContext.Products.AddRange(products);
+                    _dbContext.SaveChanges();
                     _dbContext.Events.AddRange(CreatEvent(mainUser));
+                    _dbContext.SaveChanges();
                     _dbContext.Orders.AddRange(order);
                     _dbContext.SaveChanges();
                     _dbContext.OrderProducts.AddRange(CreateOrderProduct(products, 1));
@@ -106,7 +110,8 @@ namespace Bazart.DataAccess.Seeder
                 LastName = secondName,
                 Email = "1234@gmail.com",
                 PhoneNumber = "12345678",
-                Password = "123",
+                PasswordHash = Encoding.ASCII.GetBytes("123"),
+                PasswordSalt = Encoding.ASCII.GetBytes("123"),
                 Products = new List<Product>(),
                 Events = new List<Event>(),
                 Orders = new List<Order>()

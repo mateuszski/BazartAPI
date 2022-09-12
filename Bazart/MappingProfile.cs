@@ -16,6 +16,9 @@ namespace Bazart.API
             CreateMap<Order, OrderDto>();
             //.ForMember(o => o.UserId, u => u.MapFrom(k => k.User.Id));
             CreateMap<OrderDto, Order>();
+            CreateMap<User, UserDto>().ReverseMap();
+            CreateMap<UserDataUpdateDto, User>().ReverseMap();
+            CreateMap<UserFirstRegistarationDto, User>().ReverseMap();
         }
     }
 }
