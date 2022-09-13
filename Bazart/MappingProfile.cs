@@ -19,6 +19,8 @@ namespace Bazart.API
             CreateMap<User, UserDto>().ReverseMap();
             CreateMap<UserDataUpdateDto, User>().ReverseMap();
             CreateMap<UserFirstRegistarationDto, User>().ReverseMap();
+            CreateMap<UserLoginDto, User>().ReverseMap();
+
         }
     }
 }

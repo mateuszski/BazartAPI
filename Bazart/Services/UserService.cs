@@ -80,5 +80,29 @@ namespace Bazart.API.Services
             user.PhoneNumber = update.PhoneNumber;
             _dbContext.SaveChanges();
         }
+
+        public bool CheckIfUserExist(UserLoginDto request)
+        {
+            var user = _dbContext.Users.FirstOrDefault(u => u.Email == request.Email);
+
+            if (user is null)
+            {
+                return false;
+            }
+            return true;
+        }
+
+
+        public byte[] GetPasswordSaltByUserEmail(string userEmail)
+        {
+            var user = _dbContext.Users.FirstOrDefault(u => u.Email == userEmail);
+            return user.PasswordSalt;
+        }
+
+        public byte[] GetPasswordHashByUserEmail(string userEmail)
+        {
+            var user = _dbContext.Users.FirstOrDefault(u => u.Email == userEmail);
+            return user.PasswordHash;
+        }
     }
 }

@@ -10,4 +10,7 @@ public interface IUserService
     int CreateNewUser(UserFirstRegistarationDto create);
     void RemoveUser(int id);
     void UpdateUser(int id, UserDataUpdateDto update);
+    bool CheckIfUserExist(UserLoginDto request);
+    byte[] GetPasswordHashByUserEmail(string userEmail);
+    byte[] GetPasswordSaltByUserEmail(string userEmail);
 }

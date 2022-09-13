@@ -110,8 +110,8 @@ namespace Bazart.DataAccess.Seeder
                 LastName = secondName,
                 Email = "1234@gmail.com",
                 PhoneNumber = "12345678",
-                PasswordHash = Encoding.ASCII.GetBytes("123"),
-                PasswordSalt = Encoding.ASCII.GetBytes("123"),
+                PasswordHash = Encoding.UTF8.GetBytes("123"),
+                PasswordSalt = Encoding.UTF8.GetBytes("123"),
                 Products = new List<Product>(),
                 Events = new List<Event>(),
                 Orders = new List<Order>()
