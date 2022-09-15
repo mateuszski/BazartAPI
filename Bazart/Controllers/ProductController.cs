@@ -1,6 +1,8 @@
-﻿using Bazart.API.DTO;
+﻿using System.Security.Claims;
+using Bazart.API.DTO;
 using Bazart.API.Services;
 using Bazart.Models;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Bazart.Controllers
@@ -29,6 +31,7 @@ namespace Bazart.Controllers
         }
 
         [HttpGet("{id:int}")]
+        [Authorize]
         public ActionResult<IEnumerable<ProductDto>> GetById([FromRoute] int id)
         {
             var productById = _productService.GetProductById(id);
@@ -36,6 +39,7 @@ namespace Bazart.Controllers
         }
 
         [HttpGet("user/{id:int}")]
+        [Authorize]
         public ActionResult<IEnumerable<ProductDto>> GetProductsByUserId([FromRoute] int id)
         {
             Console.WriteLine("test");
@@ -44,6 +48,7 @@ namespace Bazart.Controllers
         }
 
         [HttpPost]
+        [Authorize]
         public ActionResult CreateProduct([FromBody] CreateProductDto create)
         {
             var productId = _productService.CreateNewProduct(create);
@@ -51,14 +56,25 @@ namespace Bazart.Controllers
         }
 
         [HttpDelete("{id:int}")]
+        [Authorize]
         public ActionResult RemoveProduct([FromRoute] int id)
         {
+            //var userClaim = User.Claims.FirstOrDefault(c => c.Type == "nameidentifier");
+            //var userClaims = User.Claims.Select(c => new
+            //{
+            //    Type = c.Type,
+            //    Value = c.Value
+
+            //foreach (var item in userClaims)
+            //{
+            //}
             _productService.RemoveProduct(id);
 
             return NoContent();
         }
 
         [HttpPut("{id:int}")]
+        [Authorize]
         public ActionResult UpdateProduct([FromRoute] int id, [FromBody] UpdateProductDto update)
         {
             _productService.UpdateProduct(id, update);

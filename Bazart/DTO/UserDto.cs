@@ -9,16 +9,23 @@ namespace Bazart.API.DTO
         [Required]
         [MaxLength(50)]
         public string FirstName { get; set; }
+
         [Required]
         [MaxLength(50)]
         public string LastName { get; set; }
+
         [Required]
         [MaxLength(75)]
         public string Email { get; set; }
+
         [Required]
         public string PhoneNumber { get; set; }
+
         [Required]
         public string Password { get; set; }
+
+        public string Role { get; set; }
+        //public int UserId { get; set; }
 
         //[AllowNull]
         //public List<Product> Products { get; set; }

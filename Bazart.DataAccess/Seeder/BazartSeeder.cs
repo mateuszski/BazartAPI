@@ -114,7 +114,8 @@ namespace Bazart.DataAccess.Seeder
                 PasswordSalt = Encoding.UTF8.GetBytes("123"),
                 Products = new List<Product>(),
                 Events = new List<Event>(),
-                Orders = new List<Order>()
+                Orders = new List<Order>(),
+                Role = "",
             };
             return user;
         }
