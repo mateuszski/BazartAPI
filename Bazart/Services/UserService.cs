@@ -104,5 +104,16 @@ namespace Bazart.API.Services
             var user = _dbContext.Users.FirstOrDefault(u => u.Email == userEmail);
             return user.PasswordHash;
         }
+
+        public bool CheckIsEmailExist(string userEmail)
+        {
+            var email = _dbContext.Users.FirstOrDefault(u => u.Email == userEmail);
+            if (email is null)
+            {
+                return false;
+            }
+
+            return true;
+        }
     }
 }

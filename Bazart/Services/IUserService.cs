@@ -13,4 +13,5 @@ public interface IUserService
     bool CheckIfUserExist(UserLoginDto request);
     byte[] GetPasswordHashByUserEmail(string userEmail);
     byte[] GetPasswordSaltByUserEmail(string userEmail);
+    bool CheckIsEmailExist(string userEmail);
 }

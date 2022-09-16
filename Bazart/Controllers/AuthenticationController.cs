@@ -27,6 +27,12 @@ namespace Bazart.API.Controllers
         [HttpPost("register")]
         public async Task<ActionResult<User>> Register(UserDto request)
         {
+            var isUserExist = _userService.CheckIsEmailExist(request.Email);
+            if (isUserExist)
+            {
+                return BadRequest("Email already exist ");
+            }
+
             CreatePasswordHash(request.Password, out byte[] passwordHash, out byte[] passwordSalt);
 
             var firstUser = new UserFirstRegistarationDto()
@@ -59,7 +65,7 @@ namespace Bazart.API.Controllers
                 return BadRequest("Wrong password");
             }
 
-            //var user = _userService.GetUserById()
+            //var user = _userService.GetUserById() // do rejestracji dodac sprawdzanie email czy juz jest 
             string token = CreateToken(request);
 
             return Ok(token);
@@ -82,7 +88,7 @@ namespace Bazart.API.Controllers
 
             var token = new JwtSecurityToken(
                 claims: claims,
-                expires:DateTime.Now.AddDays(1),
+                expires:DateTime.Now.AddMinutes(20),
                 signingCredentials: creds
             );
 
