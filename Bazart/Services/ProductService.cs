@@ -88,6 +88,7 @@ namespace Bazart.API.Services
             {
                 throw new NotFoundException("Product not found");
             }
+
             _dbContext.Products.Remove(isRemoveProduct);
             _dbContext.SaveChanges();
         }

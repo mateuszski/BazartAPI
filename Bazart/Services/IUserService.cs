@@ -6,12 +6,23 @@ namespace Bazart.API.Services;
 public interface IUserService
 {
     IEnumerable<UserDto> GetAllUsers();
+
     UserDto GetUserById([FromRoute] int id);
+
     int CreateNewUser(UserFirstRegistarationDto create);
+
     void RemoveUser(int id);
+
     void UpdateUser(int id, UserDataUpdateDto update);
+
     bool CheckIfUserExist(UserLoginDto request);
+
     byte[] GetPasswordHashByUserEmail(string userEmail);
+
     byte[] GetPasswordSaltByUserEmail(string userEmail);
+
+    UserDto GetUserByEmail([FromRoute] string email);
+
+    int GetUserIdByEmail(string email);
     bool CheckIsEmailExist(string userEmail);
 }

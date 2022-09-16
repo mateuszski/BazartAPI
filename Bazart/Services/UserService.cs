@@ -8,9 +8,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Bazart.API.Services
 {
-
-
-    public class UserService :  IUserService
+    public class UserService : IUserService
     {
         private readonly BazartDbContext _dbContext;
         private readonly IMapper _mapper;
@@ -45,7 +43,25 @@ namespace Bazart.API.Services
             return userByIdDto;
         }
 
+        public int GetUserIdByEmail(string email)
+        {
+            var userId = _dbContext.Users.FirstOrDefault(p => p.Email == email);
+            return userId.Id;
+        }
 
+        public UserDto GetUserByEmail([FromRoute] string email)
+        {
+            var userByEmail = _dbContext
+                .Users
+                .FirstOrDefault(p => p.Email == email);
+            if (userByEmail is null)
+            {
+                throw new NotFoundException("User not found.");
+            }
+
+            var userByEmailDto = _mapper.Map<UserDto>(userByEmail);
+            return userByEmailDto;
+        }
 
         public int CreateNewUser(UserFirstRegistarationDto create)
         {
@@ -91,7 +107,6 @@ namespace Bazart.API.Services
             }
             return true;
         }
-
 
         public byte[] GetPasswordSaltByUserEmail(string userEmail)
         {
