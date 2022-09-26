@@ -13,26 +13,31 @@ namespace Bazart.Models
     {
         [Key]
         public int Id { get; set; }
+
         [Required]
         [MaxLength(50)]
         public string Name { get; set; }
+
         [MaxLength(300)]
         [Required]
         public string Description { get; set; }
+
         [Column(TypeName = "decimal(18,2)")]
-        //[Required]
-        public decimal? Price { get; set; }
+        public decimal Price { get; set; }
+
         //[Required]
         public int Quantity { get; set; }
+
         [Required]
         public bool isForSale { get; set; }
+
         [Required]
-        //[Display(Name = "Art Picture")] przy widoku
         [ValidateNever]
         public string ImageUrl { get; set; }
+
         public int UserId { get; set; }
         public User User { get; set; }
         public List<Category> Categories { get; set; }
-        public List<OrderProduct> OrderProducts { get; set; } //niepo
+        public List<OrderProduct> OrderProducts { get; set; }
     }
 }

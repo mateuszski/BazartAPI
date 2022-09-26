@@ -104,7 +104,7 @@ namespace Bazart.API.Repository
 
             product.Name = update.Name;
             product.Description = update.Description;
-            product.Price = update.Price;
+            product.Price = (decimal)update.Price;
             product.Quantity = update.Quantity;
             product.isForSale = update.isForSale;
             product.ImageUrl = update.ImageUrl;
