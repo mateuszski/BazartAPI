@@ -1,19 +1,20 @@
 ﻿using AutoMapper;
 using Bazart.API.DTO;
 using Bazart.API.Exceptions;
+using Bazart.API.Repository.IRepository;
 using Bazart.DataAccess.Data;
 using Bazart.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
-namespace Bazart.API.Services
+namespace Bazart.API.Repository
 {
-    public class ProductService : IProductService
+    public class ProductRepository : IProductRepository
     {
         private readonly BazartDbContext _dbContext;
         private readonly IMapper _mapper;
 
-        public ProductService(BazartDbContext dbContext, IMapper mapper)
+        public ProductRepository(BazartDbContext dbContext, IMapper mapper)
         {
             _dbContext = dbContext;
             _mapper = mapper;
@@ -88,6 +89,7 @@ namespace Bazart.API.Services
             {
                 throw new NotFoundException("Product not found");
             }
+
             _dbContext.Products.Remove(isRemoveProduct);
             _dbContext.SaveChanges();
         }
@@ -102,7 +104,7 @@ namespace Bazart.API.Services
 
             product.Name = update.Name;
             product.Description = update.Description;
-            product.Price = update.Price;
+            product.Price = (decimal)update.Price;
             product.Quantity = update.Quantity;
             product.isForSale = update.isForSale;
             product.ImageUrl = update.ImageUrl;

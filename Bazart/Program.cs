@@ -1,6 +1,11 @@
 using System.Reflection;
+using System.Text;
 using Bazart.API.Middleware;
-using Bazart.API.Services;
+using Bazart.API.Repository;
+using Bazart.API.Repository.IRepository;
+
+using Bazart.API.Repository;
+
 using Bazart.DataAccess.Data;
 using Bazart.DataAccess.Seeder;
 using Microsoft.EntityFrameworkCore;
@@ -8,6 +13,8 @@ using NLog;
 using Microsoft.IdentityModel.Tokens;
 using Newtonsoft.Json.Serialization;
 using NLog.Web;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.OpenApi.Models;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -35,13 +42,62 @@ builder.Services.AddMvc();
 builder.Services.AddMvcCore();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
-builder.Services.AddSwaggerGen();
+
+var key = builder.Configuration.GetValue<string>("AppSettings:Token");
+
+builder.Services.AddAuthentication(option =>
+{
+    option.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
+    option.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
+}).AddJwtBearer(options =>
+{
+    options.RequireHttpsMetadata = false;
+    options.SaveToken = true;
+    options.TokenValidationParameters = new TokenValidationParameters
+    {
+        ValidateIssuerSigningKey = true,
+        IssuerSigningKey = new SymmetricSecurityKey(Encoding.ASCII.GetBytes(key)),
+        ValidateIssuer = false,
+        ValidateAudience = false
+    };
+});
+
+builder.Services.AddSwaggerGen(options =>
+{
+    options.AddSecurityDefinition("Bearer", new OpenApiSecurityScheme
+    {
+        Description =
+            "JWT Authorization header using the Bearer schema. \r\n\r\n " +
+            "Enter 'Bearer' [space] and then your token in the text input below. \r\n\r\n" +
+            "Example: \"Bearer 1234wersfw123qq\"",
+        Name = "Authorization",
+        In = ParameterLocation.Header,
+        Scheme = "Bearer"
+    });
+    options.AddSecurityRequirement(new OpenApiSecurityRequirement()
+    {
+        {
+            new OpenApiSecurityScheme
+            {
+                Reference = new OpenApiReference
+                {
+                    Type = ReferenceType.SecurityScheme,
+                    Id = "Bearer"
+                },
+                Scheme = "oauth2",
+                Name = "Bearer",
+                In = ParameterLocation.Header
+            },
+            new List<string>()
+        }
+    });
+});
 builder.Services.AddAutoMapper(Assembly.GetExecutingAssembly());
-builder.Services.AddScoped<IProductService, ProductService>();
-builder.Services.AddScoped<IEventService, EventService>();
-builder.Services.AddScoped<IOrderService, OrderService>();
-builder.Services.AddScoped<IUserService, UserService>();
-builder.Services.AddScoped<ICategoryService, CategoryService>();
+builder.Services.AddScoped<IProductRepository, ProductRepository>();
+builder.Services.AddScoped<IEventRepository, EventRepository>();
+builder.Services.AddScoped<IOrderRepository, OrderRepository>();
+builder.Services.AddScoped<IUserRepository, UserRepository>();
+builder.Services.AddScoped<ICategoryRepository, CategoryRepository>();
 builder.Services.AddScoped<ErrorHandlingMiddleware>();
 builder.Services.AddCors();
 
@@ -70,6 +126,8 @@ app.UseCors(opt =>
 app.UseMiddleware<ErrorHandlingMiddleware>();
 
 app.UseHttpsRedirection();
+
+app.UseAuthentication();
 
 app.UseAuthorization();
 

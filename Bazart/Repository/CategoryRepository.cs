@@ -1,15 +1,16 @@
 ﻿using AutoMapper;
+using Bazart.API.Repository.IRepository;
 using Bazart.DataAccess.Data;
 using Bazart.Models;
 
-namespace Bazart.API.Services
+namespace Bazart.API.Repository
 {
-    public class CategoryService : ICategoryService
+    public class CategoryRepository : ICategoryRepository
     {
         private readonly BazartDbContext _dbContext;
         private readonly IMapper _mapper;
 
-        public CategoryService(BazartDbContext dbContext, IMapper mapper)
+        public CategoryRepository(BazartDbContext dbContext, IMapper mapper)
         {
             _dbContext = dbContext;
             _mapper = mapper;

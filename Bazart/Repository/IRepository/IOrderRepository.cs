@@ -1,10 +1,9 @@
 ﻿using Bazart.API.DTO;
-using Bazart.Models;
 using Microsoft.AspNetCore.Mvc;
 
-namespace Bazart.API.Services
+namespace Bazart.API.Repository.IRepository
 {
-    public interface IOrderService
+    public interface IOrderRepository
     {
         OrderDto GetOrderById([FromRoute] int id);
     }
