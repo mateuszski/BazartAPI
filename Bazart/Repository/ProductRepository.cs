@@ -1,19 +1,20 @@
 ﻿using AutoMapper;
 using Bazart.API.DTO;
 using Bazart.API.Exceptions;
+using Bazart.API.Repository.IRepository;
 using Bazart.DataAccess.Data;
 using Bazart.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
-namespace Bazart.API.Services
+namespace Bazart.API.Repository
 {
-    public class ProductService : IProductService
+    public class ProductRepository : IProductRepository
     {
         private readonly BazartDbContext _dbContext;
         private readonly IMapper _mapper;
 
-        public ProductService(BazartDbContext dbContext, IMapper mapper)
+        public ProductRepository(BazartDbContext dbContext, IMapper mapper)
         {
             _dbContext = dbContext;
             _mapper = mapper;

@@ -1,4 +1,5 @@
-﻿using Bazart.API.Services;
+﻿using Bazart.API.Repository.IRepository;
+using Bazart.API.Services;
 using Bazart.Models;
 using Microsoft.AspNetCore.Mvc;
 
@@ -8,17 +9,17 @@ namespace Bazart.API.Controllers
     [ApiController]
     public class CategoryController : ControllerBase
     {
-        private readonly ICategoryService _categoryService;
+        private readonly ICategoryRepository _categoryRepository;
 
-        public CategoryController(ICategoryService categoryService)
+        public CategoryController(ICategoryRepository categoryRepository)
         {
-            _categoryService = categoryService;
+            _categoryRepository = categoryRepository;
         }
 
         [HttpGet]
         public ActionResult<IEnumerable<CategoryDto>> GetCategories()
         {
-            var categories = _categoryService.GetAllCategories();
+            var categories = _categoryRepository.GetAllCategories();
             return Ok(categories);
         }
     }

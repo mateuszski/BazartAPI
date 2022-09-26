@@ -1,6 +1,8 @@
 using System.Reflection;
 using System.Text;
 using Bazart.API.Middleware;
+using Bazart.API.Repository;
+using Bazart.API.Repository.IRepository;
 using Bazart.API.Services;
 using Bazart.DataAccess.Data;
 using Bazart.DataAccess.Seeder;
@@ -89,11 +91,11 @@ builder.Services.AddSwaggerGen(options =>
     });
 });
 builder.Services.AddAutoMapper(Assembly.GetExecutingAssembly());
-builder.Services.AddScoped<IProductService, ProductService>();
-builder.Services.AddScoped<IEventService, EventService>();
-builder.Services.AddScoped<IOrderService, OrderService>();
-builder.Services.AddScoped<IUserService, UserService>();
-builder.Services.AddScoped<ICategoryService, CategoryService>();
+builder.Services.AddScoped<IProductRepository, ProductRepository>();
+builder.Services.AddScoped<IEventRepository, EventRepository>();
+builder.Services.AddScoped<IOrderRepository, OrderRepository>();
+builder.Services.AddScoped<IUserRepository, UserRepository>();
+builder.Services.AddScoped<ICategoryRepository, CategoryRepository>();
 builder.Services.AddScoped<ErrorHandlingMiddleware>();
 builder.Services.AddCors();
 

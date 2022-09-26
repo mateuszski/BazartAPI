@@ -3,6 +3,7 @@ using System.Security.Claims;
 using System.Security.Cryptography;
 using AutoMapper;
 using Bazart.API.DTO;
+using Bazart.API.Repository.IRepository;
 using Bazart.API.Services;
 using Bazart.Models;
 using Microsoft.AspNetCore.Mvc;
@@ -14,12 +15,12 @@ namespace Bazart.API.Controllers
     [ApiController]
     public class AuthenticationController : ControllerBase
     {
-        private readonly IUserService _userService;
+        private readonly IUserRepository _userRepository;
         private readonly IConfiguration _configuration;
 
-        public AuthenticationController(IUserService userService, IConfiguration configuration)
+        public AuthenticationController(IUserRepository userRepository, IConfiguration configuration)
         {
-            _userService = userService;
+            _userRepository = userRepository;
             _configuration = configuration;
         }
 
@@ -39,7 +40,7 @@ namespace Bazart.API.Controllers
                 Role = request.Role,
             };
 
-            _userService.CreateNewUser(firstUser);
+            _userRepository.CreateNewUser(firstUser);
 
             return Ok(firstUser);
         }
@@ -47,7 +48,7 @@ namespace Bazart.API.Controllers
         [HttpPost("login")]
         public async Task<ActionResult<string>> Login(UserLoginDto request)
         {
-            var isUser = _userService.CheckIfUserExist(request);
+            var isUser = _userRepository.CheckIfUserExist(request);
 
             if (isUser == false)
             {
@@ -59,8 +60,8 @@ namespace Bazart.API.Controllers
                 return BadRequest("Wrong password");
             }
 
-            var userByEmail = _userService.GetUserByEmail(request.Email);
-            //var user = _userService.GetUserById()
+            var userByEmail = _userRepository.GetUserByEmail(request.Email);
+            //var user = _userRepository.GetUserById()
             string token = CreateToken(userByEmail);
 
             return Ok(token);
@@ -68,7 +69,7 @@ namespace Bazart.API.Controllers
 
         private string CreateToken(UserDto user)
         {
-            var userId = _userService.GetUserIdByEmail(user.Email);
+            var userId = _userRepository.GetUserIdByEmail(user.Email);
             List<Claim> claims = new List<Claim>
             {
                 new Claim(ClaimTypes.NameIdentifier, userId.ToString()),
@@ -101,8 +102,8 @@ namespace Bazart.API.Controllers
 
         private bool VerifyPasswordHash(string password, string userEmail)
         {
-            var userSalt = _userService.GetPasswordSaltByUserEmail(userEmail);
-            var userHash = _userService.GetPasswordHashByUserEmail(userEmail);
+            var userSalt = _userRepository.GetPasswordSaltByUserEmail(userEmail);
+            var userHash = _userRepository.GetPasswordHashByUserEmail(userEmail);
             using (var hmac = new HMACSHA512(userSalt))
             {
                 var computeHash = hmac.ComputeHash(System.Text.Encoding.UTF8.GetBytes(password));

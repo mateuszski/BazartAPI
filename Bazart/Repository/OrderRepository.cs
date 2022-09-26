@@ -1,25 +1,23 @@
 ﻿using AutoMapper;
 using Bazart.API.DTO;
 using Bazart.API.Exceptions;
+using Bazart.API.Repository.IRepository;
 using Bazart.DataAccess.Data;
-using Bazart.Models;
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
 
-namespace Bazart.API.Services
+namespace Bazart.API.Repository
 {
-    public class OrderService : IOrderService
+    public class OrderRepository : IOrderRepository
     {
         private readonly BazartDbContext _dbContext;
         private readonly IMapper _mapper;
 
-        public OrderService(BazartDbContext dbContext, IMapper mapper)
+        public OrderRepository(BazartDbContext dbContext, IMapper mapper)
         {
             _dbContext = dbContext;
             _mapper = mapper;
         }
 
-        public OrderDto GetOrderById( int id)
+        public OrderDto GetOrderById(int id)
         {
             var orderId = _dbContext
                 .Orders

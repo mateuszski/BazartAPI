@@ -1,4 +1,5 @@
 ﻿using Bazart.API.DTO;
+using Bazart.API.Repository.IRepository;
 using Bazart.API.Services;
 using Bazart.Models;
 using Microsoft.AspNetCore.Mvc;
@@ -9,17 +10,17 @@ namespace Bazart.API.Controllers
     [ApiController]
     public class EventController : ControllerBase
     {
-        private readonly IEventService _eventService;
+        private readonly IEventRepository _eventRepository;
 
-        public EventController(IEventService eventService)
+        public EventController(IEventRepository eventRepository)
         {
-            _eventService = eventService;
+            _eventRepository = eventRepository;
         }
 
         [HttpGet]
         public ActionResult<IEnumerable<EventDto>> GetAll([FromQuery] string? like = null)
         {
-            var events = _eventService.GetAllEvents();
+            var events = _eventRepository.GetAllEvents();
             if (!string.IsNullOrWhiteSpace(like))
             {
                 events = events.Where(d => d.Name.Contains(like));
@@ -31,21 +32,21 @@ namespace Bazart.API.Controllers
         [HttpGet("{id:int}")]
         public ActionResult<IEnumerable<EventDto>> GetById([FromRoute] int id)
         {
-            var eventById = _eventService.GetEventById(id);
+            var eventById = _eventRepository.GetEventById(id);
             return Ok(eventById);
         }
 
         [HttpPost]
         public ActionResult CreateEvent([FromBody] CreateEventDto create)
         {
-            var eventid = _eventService.CreateNewEvent(create);
+            var eventid = _eventRepository.CreateNewEvent(create);
             return Created($"/api/event{eventid}", null);
         }
 
         [HttpDelete("{id:int}")]
         public ActionResult RemoveEvent([FromRoute] int id)
         {
-            _eventService.RemoveEvent(id);
+            _eventRepository.RemoveEvent(id);
 
             return NoContent();
         }
@@ -53,7 +54,7 @@ namespace Bazart.API.Controllers
         [HttpPut("{id:int}")]
         public ActionResult UpdateEvent([FromRoute] int id, [FromBody] UpdateEventDto update)
         {
-            _eventService.UpdateEvent(id, update);
+            _eventRepository.UpdateEvent(id, update);
 
             return Ok();
         }

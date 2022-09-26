@@ -1,15 +1,18 @@
 ﻿using Bazart.API.DTO;
-using Bazart.Models;
 using Microsoft.AspNetCore.Mvc;
 
-namespace Bazart.API.Services
+namespace Bazart.API.Repository.IRepository
 {
-    public interface IEventService
+    public interface IEventRepository
     {
         IEnumerable<EventDto> GetAllEvents();
+
         EventDto GetEventById([FromRoute] int id);
+
         int CreateNewEvent(CreateEventDto create);
+
         void RemoveEvent(int id);
+
         void UpdateEvent(int id, UpdateEventDto update);
     }
 }

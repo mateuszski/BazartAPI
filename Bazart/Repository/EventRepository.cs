@@ -1,23 +1,19 @@
 ﻿using AutoMapper;
 using Bazart.API.DTO;
-using Bazart.DataAccess.Data;
-using AutoMapper;
-using Bazart.API.DTO;
 using Bazart.API.Exceptions;
-using Bazart.Controllers;
+using Bazart.API.Repository.IRepository;
 using Bazart.DataAccess.Data;
 using Bazart.Models;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
 
-namespace Bazart.API.Services
+namespace Bazart.API.Repository
 {
-    public class EventService : IEventService
+    public class EventRepository : IEventRepository
     {
         private readonly BazartDbContext _dbContext;
         private readonly IMapper _mapper;
 
-        public EventService(BazartDbContext dbContext, IMapper mapper)
+        public EventRepository(BazartDbContext dbContext, IMapper mapper)
         {
             _dbContext = dbContext;
             _mapper = mapper;
@@ -86,6 +82,5 @@ namespace Bazart.API.Services
             eventUpdateData.MapLng = update.MapLng;
             _dbContext.SaveChanges();
         }
-
     }
 }
