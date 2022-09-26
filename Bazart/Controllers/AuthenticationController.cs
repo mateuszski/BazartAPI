@@ -66,7 +66,6 @@ namespace Bazart.API.Controllers
             }
 
             var userByEmail = _userService.GetUserByEmail(request.Email);
-            //var user = _userService.GetUserById()
             string token = CreateToken(userByEmail);
 
             return Ok(token);

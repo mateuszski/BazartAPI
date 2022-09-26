@@ -59,11 +59,14 @@ namespace Bazart.Controllers
         [Authorize]
         public ActionResult RemoveProduct([FromRoute] int id)
         {
-            //var userClaim = User.Claims.FirstOrDefault(c => c.Type == "nameidentifier");
-            //var userClaims = User.Claims.Select(c => new
-            //{
-            //    Type = c.Type,
-            //    Value = c.Value
+            //var userClaim = User.Claims;
+            var userClaims = User.Claims.Select(c => new
+            {
+                Type = c.Type,
+                Value = c.Value
+            }).FirstOrDefault(c => c.Type == "nameidentifier");
+
+            Console.WriteLine(userClaims);
 
             //foreach (var item in userClaims)
             //{
