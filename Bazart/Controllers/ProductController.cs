@@ -1,6 +1,7 @@
 ﻿using System.Security.Claims;
 using Bazart.API.DTO;
-using Bazart.API.Services;
+using Bazart.API.Repository.IRepository;
+using Bazart.API.Repository;
 using Bazart.Models;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -11,17 +12,17 @@ namespace Bazart.Controllers
     [ApiController]
     public class ProductController : ControllerBase
     {
-        private readonly IProductService _productService;
+        private readonly IProductRepository _productRepository;
 
-        public ProductController(IProductService productService)
+        public ProductController(IProductRepository productRepository)
         {
-            _productService = productService;
+            _productRepository = productRepository;
         }
 
         [HttpGet]
         public ActionResult<IEnumerable<ProductDto>> GetAll([FromQuery] string? like = null)
         {
-            var products = _productService.GetAllProducts();
+            var products = _productRepository.GetAllProducts();
             if (!string.IsNullOrWhiteSpace(like))
             {
                 products = products.Where(d => d.Description.Contains(like));
@@ -34,7 +35,7 @@ namespace Bazart.Controllers
         [Authorize]
         public ActionResult<IEnumerable<ProductDto>> GetById([FromRoute] int id)
         {
-            var productById = _productService.GetProductById(id);
+            var productById = _productRepository.GetProductById(id);
             return Ok(productById);
         }
 
@@ -43,7 +44,7 @@ namespace Bazart.Controllers
         public ActionResult<IEnumerable<ProductDto>> GetProductsByUserId([FromRoute] int id)
         {
             Console.WriteLine("test");
-            var productsByUserId = _productService.GetProductsByUserId(id);
+            var productsByUserId = _productRepository.GetProductsByUserId(id);
             return Ok(productsByUserId);
         }
 
@@ -51,7 +52,7 @@ namespace Bazart.Controllers
         [Authorize]
         public ActionResult CreateProduct([FromBody] CreateProductDto create)
         {
-            var productId = _productService.CreateNewProduct(create);
+            var productId = _productRepository.CreateNewProduct(create);
             return Created($"/api/product{productId}", null);
         }
 
@@ -71,7 +72,7 @@ namespace Bazart.Controllers
             //foreach (var item in userClaims)
             //{
             //}
-            _productService.RemoveProduct(id);
+            _productRepository.RemoveProduct(id);
 
             return NoContent();
         }
@@ -80,7 +81,7 @@ namespace Bazart.Controllers
         [Authorize]
         public ActionResult UpdateProduct([FromRoute] int id, [FromBody] UpdateProductDto update)
         {
-            _productService.UpdateProduct(id, update);
+            _productRepository.UpdateProduct(id, update);
 
             return Ok();
         }
@@ -88,7 +89,7 @@ namespace Bazart.Controllers
         [HttpGet("latest")]
         public ActionResult<IEnumerable<ProductDto>> LatestProducts()
         {
-            var latestProducts = _productService.GetLatestProducts();
+            var latestProducts = _productRepository.GetLatestProducts();
             return Ok(latestProducts);
         }
     }

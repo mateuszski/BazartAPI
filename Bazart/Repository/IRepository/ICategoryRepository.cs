@@ -1,8 +1,8 @@
 ﻿using Bazart.Models;
 
-namespace Bazart.API.Services
+namespace Bazart.API.Repository.IRepository
 {
-    public interface ICategoryService
+    public interface ICategoryRepository
     {
         IEnumerable<CategoryDto> GetAllCategories();
     }

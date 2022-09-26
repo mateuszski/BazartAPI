@@ -86,7 +86,7 @@ namespace Bazart.DataAccess.Seeder
             Event newEvent = new Event()
             {
                 Name = Faker.Name.FullName(),
-                Description = Faker.Lorem.Words(6).ToString(),
+                Description = Faker.Lorem.Sentence(10),
                 Adress = "Kraków",
                 Owner = eventOwner,
                 Users = new List<User>()
