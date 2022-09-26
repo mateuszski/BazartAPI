@@ -1,6 +1,6 @@
 ﻿using Bazart.API.DTO;
 using Bazart.API.Repository.IRepository;
-using Bazart.API.Services;
+using Bazart.API.Repository;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Bazart.API.Controllers

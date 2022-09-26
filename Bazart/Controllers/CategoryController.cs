@@ -1,5 +1,5 @@
 ﻿using Bazart.API.Repository.IRepository;
-using Bazart.API.Services;
+using Bazart.API.Repository;
 using Bazart.Models;
 using Microsoft.AspNetCore.Mvc;
 

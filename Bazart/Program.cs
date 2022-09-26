@@ -3,7 +3,9 @@ using System.Text;
 using Bazart.API.Middleware;
 using Bazart.API.Repository;
 using Bazart.API.Repository.IRepository;
-using Bazart.API.Services;
+
+using Bazart.API.Repository;
+
 using Bazart.DataAccess.Data;
 using Bazart.DataAccess.Seeder;
 using Microsoft.EntityFrameworkCore;
