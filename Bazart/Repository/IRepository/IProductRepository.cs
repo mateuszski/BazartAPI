@@ -21,5 +21,6 @@ namespace Bazart.API.Repository.IRepository
         IEnumerable<ProductDto> GetProductsByUserId([FromRoute] int id);
 
         IEnumerable<ProductDto> GetLatestProducts();
+        Product GetProductWithUserById([FromRoute] int productId);
     }
 }

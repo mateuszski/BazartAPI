@@ -48,12 +48,25 @@ namespace Bazart.API.Repository
             return productsIdDto;
         }
 
+        public Product GetProductWithUserById([FromRoute] int productId)
+        {
+            var product = _dbContext
+                .Products
+                .FirstOrDefault(p => p.Id == productId);
+
+            if (product is null)
+            {
+                throw new NotFoundException("Product not found.");
+            }
+
+            return product;
+        }
+
         public IEnumerable<ProductDto> GetProductsByUserId([FromRoute] int id)
         {
             var productsByUserId = _dbContext
                 .Products
                 .Include(p => p.Categories)
-                .Include(u => u.User)
                 .Where(p => p.User.Id == id);
             if (productsByUserId is null)
             {

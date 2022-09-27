@@ -61,7 +61,7 @@ namespace Bazart.Controllers
         [Authorize]
         public ActionResult RemoveProduct([FromRoute] int id)
         {
-            var userClaim = User.Claims.FirstOrDefault(c => c.Type == "email");
+            //var userClaim = User.Claims.FirstOrDefault(c => c.Type == "email");
             var userClaims = User.Claims.Select(c => new
             {
                 Type = c.Type,
@@ -75,15 +75,20 @@ namespace Bazart.Controllers
             }
 
             var userId = _userRepository.GetUserIdByEmail(userEmail);
-            var productToRemove = _productRepository.GetProductToRemove(id);
+            var productToRemove = _productRepository.GetProductWithUserById(id);
 
-            if (productToRemove.User.Id == userId)
+            if (productToRemove is null)
             {
-                _productRepository.RemoveProduct(id);
-                return Ok("sukces");
+                return BadRequest("Product does not exist");
             }
 
-            return BadRequest();
+            if (productToRemove.UserId == userId)
+            {
+                _productRepository.RemoveProduct(id);
+                return Ok("Removed");
+            }
+
+            return BadRequest("You are not allow");
         }
 
         [HttpPut("{id:int}")]
