@@ -13,10 +13,12 @@ namespace Bazart.Controllers
     public class ProductController : ControllerBase
     {
         private readonly IProductRepository _productRepository;
+        private readonly IUserRepository _userRepository;
 
-        public ProductController(IProductRepository productRepository)
+        public ProductController(IProductRepository productRepository, IUserRepository userRepository)
         {
             _productRepository = productRepository;
+            _userRepository = userRepository;
         }
 
         [HttpGet]
@@ -59,21 +61,29 @@ namespace Bazart.Controllers
         [Authorize]
         public ActionResult RemoveProduct([FromRoute] int id)
         {
-            //var userClaim = User.Claims;
+            var userClaim = User.Claims.FirstOrDefault(c => c.Type == "email");
             var userClaims = User.Claims.Select(c => new
             {
                 Type = c.Type,
                 Value = c.Value
-            }).FirstOrDefault(c => c.Type == "nameidentifier");
+            });
+            var userEmail = "";
+            foreach (var item in userClaims)
+            {
+                userEmail = item.Value;
+                break;
+            }
 
-            Console.WriteLine(userClaims);
+            var userId = _userRepository.GetUserIdByEmail(userEmail);
+            var productToRemove = _productRepository.GetProductToRemove(id);
 
-            //foreach (var item in userClaims)
-            //{
-            //}
-            _productRepository.RemoveProduct(id);
+            if (productToRemove.User.Id == userId)
+            {
+                _productRepository.RemoveProduct(id);
+                return Ok("sukces");
+            }
 
-            return NoContent();
+            return BadRequest();
         }
 
         [HttpPut("{id:int}")]
