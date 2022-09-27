@@ -32,7 +32,6 @@ namespace Bazart.Controllers
         }
 
         [HttpGet("{id:int}")]
-        [Authorize]
         public ActionResult<IEnumerable<ProductDto>> GetById([FromRoute] int id)
         {
             var productById = _productRepository.GetProductById(id);
