@@ -15,6 +15,10 @@ using Newtonsoft.Json.Serialization;
 using NLog.Web;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.OpenApi.Models;
+using Microsoft.AspNetCore.Authentication.Cookies;
+using Microsoft.AspNetCore.Mvc.Authorization;
+using Microsoft.AspNetCore.Mvc.Filters;
+using Microsoft.AspNetCore.Authorization;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -29,6 +33,7 @@ builder.Services.AddDbContext<BazartDbContext>(options => options.UseSqlServer(
     builder.Configuration.GetConnectionString("DatabaseConnection")));
 builder.Services.AddScoped<BazartSeeder>();
 builder.Services.AddControllers()
+    .AddMvcOptions(q => q.Filters.Add((new AuthorizeFilter())))
     //{
     //    options.ReturnHttpNotAcceptable = true;
     //})
@@ -38,6 +43,7 @@ builder.Services.AddControllers()
         settings.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore;
     })
     .AddXmlDataContractSerializerFormatters();
+
 builder.Services.AddMvc();
 builder.Services.AddMvcCore();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
@@ -60,8 +66,29 @@ builder.Services.AddAuthentication(option =>
         ValidateIssuer = false,
         ValidateAudience = false
     };
+}).AddCookie(option =>
+{
+    option.Cookie.Name = "__siastko";
+    option.LoginPath = "/login/cookie";
+    option.Cookie.SameSite = SameSiteMode.Strict;
+    option.Events.OnRedirectToLogin = (BazartDbContext) =>
+    {
+        BazartDbContext.Response.StatusCode = StatusCodes.Status401Unauthorized;
+        return Task.CompletedTask;
+    };
 });
 
+
+
+builder.Services.AddAuthorization(options =>
+{
+    var defaultAuthorizationPolicyBuilder = new AuthorizationPolicyBuilder(
+        JwtBearerDefaults.AuthenticationScheme,
+        CookieAuthenticationDefaults.AuthenticationScheme);
+    defaultAuthorizationPolicyBuilder =
+        defaultAuthorizationPolicyBuilder.RequireAuthenticatedUser();
+    options.DefaultPolicy = defaultAuthorizationPolicyBuilder.Build();
+});
 builder.Services.AddSwaggerGen(options =>
 {
     options.AddSecurityDefinition("Bearer", new OpenApiSecurityScheme
