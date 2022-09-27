@@ -97,9 +97,9 @@ namespace Bazart.API.Repository
             _dbContext.SaveChanges();
         }
 
-        public bool CheckIfUserExist(UserLoginDto request)
+        public bool CheckIfUserExist(string email)
         {
-            var user = _dbContext.Users.FirstOrDefault(u => u.Email == request.Email);
+            var user = _dbContext.Users.FirstOrDefault(u => u.Email == email);
 
             if (user is null)
             {

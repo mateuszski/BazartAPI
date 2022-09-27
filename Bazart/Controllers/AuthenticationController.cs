@@ -27,7 +27,7 @@ namespace Bazart.API.Controllers
         [HttpPost("register")]
         public async Task<ActionResult<User>> Register(UserDto request)
         {
-            var isUserExist = _userService.CheckIsEmailExist(request.Email);
+            var isUserExist = _userRepository.CheckIfUserExist(request.Email);
             if (isUserExist)
             {
                 return BadRequest("Email already exist ");
@@ -54,7 +54,7 @@ namespace Bazart.API.Controllers
         [HttpPost("login")]
         public async Task<ActionResult<string>> Login(UserLoginDto request)
         {
-            var isUser = _userRepository.CheckIfUserExist(request);
+            var isUser = _userRepository.CheckIfUserExist(request.Email);
 
             if (isUser == false)
             {

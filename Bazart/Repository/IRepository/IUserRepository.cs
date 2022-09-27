@@ -15,7 +15,7 @@ namespace Bazart.API.Repository.IRepository
 
         void UpdateUser(int id, UserDataUpdateDto update);
 
-        bool CheckIfUserExist(UserLoginDto request);
+        bool CheckIfUserExist(string email);
 
         byte[] GetPasswordHashByUserEmail(string userEmail);
 
