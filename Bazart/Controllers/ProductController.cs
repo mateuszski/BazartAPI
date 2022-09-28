@@ -13,10 +13,12 @@ namespace Bazart.Controllers
     public class ProductController : ControllerBase
     {
         private readonly IProductRepository _productRepository;
+        private readonly IUserRepository _userRepository;
 
-        public ProductController(IProductRepository productRepository)
+        public ProductController(IProductRepository productRepository, IUserRepository userRepository)
         {
             _productRepository = productRepository;
+            _userRepository = userRepository;
         }
 
         [HttpGet]
@@ -32,7 +34,6 @@ namespace Bazart.Controllers
         }
 
         [HttpGet("{id:int}")]
-        [Authorize]
         public ActionResult<IEnumerable<ProductDto>> GetById([FromRoute] int id)
         {
             var productById = _productRepository.GetProductById(id);
@@ -60,18 +61,34 @@ namespace Bazart.Controllers
         [Authorize]
         public ActionResult RemoveProduct([FromRoute] int id)
         {
-            //var userClaim = User.Claims.FirstOrDefault(c => c.Type == "nameidentifier");
-            //var userClaims = User.Claims.Select(c => new
-            //{
-            //    Type = c.Type,
-            //    Value = c.Value
+            //var userClaim = User.Claims.FirstOrDefault(c => c.Type == "email");
+            var userClaims = User.Claims.Select(c => new
+            {
+                Type = c.Type,
+                Value = c.Value
+            });
+            var userEmail = "";
+            foreach (var item in userClaims)
+            {
+                userEmail = item.Value;
+                break;
+            }
 
-            //foreach (var item in userClaims)
-            //{
-            //}
-            _productRepository.RemoveProduct(id);
+            var userId = _userRepository.GetUserIdByEmail(userEmail);
+            var productToRemove = _productRepository.GetProductWithUserById(id);
 
-            return NoContent();
+            if (productToRemove is null)
+            {
+                return BadRequest("Product does not exist");
+            }
+
+            if (productToRemove.UserId == userId)
+            {
+                _productRepository.RemoveProduct(id);
+                return Ok("Removed");
+            }
+
+            return BadRequest("You are not allow");
         }
 
         [HttpPut("{id:int}")]

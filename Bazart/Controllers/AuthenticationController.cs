@@ -8,11 +8,15 @@ using Bazart.API.Repository;
 using Bazart.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.IdentityModel.Tokens;
+using Microsoft.AspNetCore.Authentication.Cookies;
+using Microsoft.AspNetCore.Authentication;
+using Microsoft.AspNetCore.Authorization;
 
 namespace Bazart.API.Controllers
 {
     [Route("api/authentication")]
     [ApiController]
+    [AllowAnonymous]
     public class AuthenticationController : ControllerBase
     {
         private readonly IUserRepository _userRepository;
@@ -27,6 +31,12 @@ namespace Bazart.API.Controllers
         [HttpPost("register")]
         public async Task<ActionResult<User>> Register(UserDto request)
         {
+            var isUserExist = _userRepository.CheckIfUserExist(request.Email);
+            if (isUserExist)
+            {
+                return BadRequest("Email already exist ");
+            }
+
             CreatePasswordHash(request.Password, out byte[] passwordHash, out byte[] passwordSalt);
 
             var firstUser =  new UserFirstRegistarationDto()
@@ -48,7 +58,7 @@ namespace Bazart.API.Controllers
         [HttpPost("login")]
         public async Task<ActionResult<string>> Login(UserLoginDto request)
         {
-            var isUser = _userRepository.CheckIfUserExist(request);
+            var isUser = _userRepository.CheckIfUserExist(request.Email);
 
             if (isUser == false)
             {
@@ -65,6 +75,29 @@ namespace Bazart.API.Controllers
             string token = CreateToken(userByEmail);
 
             return Ok(token);
+        }
+
+        [HttpPost("login/Cookie")]
+        public async Task<ActionResult<string>> LoginCookie(UserLoginDto request)
+        {
+            List<Claim> claims = new List<Claim>
+            {
+                new Claim(ClaimTypes.Email, request.Email)
+            };
+
+            var identity = new ClaimsIdentity(claims, CookieAuthenticationDefaults.AuthenticationScheme);
+            identity.AddClaim(new Claim(ClaimTypes.Email, request.Password ?? string.Empty));
+            var principal = new ClaimsPrincipal(identity);
+            await HttpContext.SignInAsync(
+                CookieAuthenticationDefaults.AuthenticationScheme,
+                principal,
+                new AuthenticationProperties
+                {
+                    IsPersistent = true,
+                    AllowRefresh = true,
+                    ExpiresUtc = DateTime.UtcNow.AddDays(1)
+                });
+            return Ok();
         }
 
         private string CreateToken(UserDto user)

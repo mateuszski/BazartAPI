@@ -97,9 +97,9 @@ namespace Bazart.API.Repository
             _dbContext.SaveChanges();
         }
 
-        public bool CheckIfUserExist(UserLoginDto request)
+        public bool CheckIfUserExist(string email)
         {
-            var user = _dbContext.Users.FirstOrDefault(u => u.Email == request.Email);
+            var user = _dbContext.Users.FirstOrDefault(u => u.Email == email);
 
             if (user is null)
             {
@@ -118,6 +118,17 @@ namespace Bazart.API.Repository
         {
             var user = _dbContext.Users.FirstOrDefault(u => u.Email == userEmail);
             return user.PasswordHash;
+        }
+
+        public bool CheckIsEmailExist(string userEmail)
+        {
+            var email = _dbContext.Users.FirstOrDefault(u => u.Email == userEmail);
+            if (email is null)
+            {
+                return false;
+            }
+
+            return true;
         }
     }
 }

@@ -48,6 +48,20 @@ namespace Bazart.API.Repository
             return productsIdDto;
         }
 
+        public Product GetProductWithUserById([FromRoute] int productId)
+        {
+            var product = _dbContext
+                .Products
+                .FirstOrDefault(p => p.Id == productId);
+
+            if (product is null)
+            {
+                throw new NotFoundException("Product not found.");
+            }
+
+            return product;
+        }
+
         public IEnumerable<ProductDto> GetProductsByUserId([FromRoute] int id)
         {
             var productsByUserId = _dbContext
@@ -60,6 +74,16 @@ namespace Bazart.API.Repository
             }
             var productsByUserIdDto = _mapper.Map<List<ProductDto>>(productsByUserId);
             return productsByUserIdDto;
+        }
+
+        public Product GetProductToRemove(int userId)
+        {
+            var userProductId = _dbContext.Products.FirstOrDefault(p => p.UserId == userId);
+            if (userProductId is null)
+            {
+                throw new NotFoundException("Product not found.");
+            }
+            return userProductId;
         }
 
         public IEnumerable<ProductDto> GetLatestProducts()

@@ -10,6 +10,8 @@ namespace Bazart.API.Repository.IRepository
 
         ProductDto GetProductById([FromRoute] int id);
 
+        Product GetProductToRemove(int userId);
+
         int CreateNewProduct(CreateProductDto create);
 
         void RemoveProduct(int id);
@@ -19,5 +21,6 @@ namespace Bazart.API.Repository.IRepository
         IEnumerable<ProductDto> GetProductsByUserId([FromRoute] int id);
 
         IEnumerable<ProductDto> GetLatestProducts();
+        Product GetProductWithUserById([FromRoute] int productId);
     }
 }
