@@ -2,12 +2,14 @@
 using Bazart.API.Repository.IRepository;
 using Bazart.API.Repository;
 using Bazart.Models;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Bazart.API.Controllers
 {
     [Route("api/event")]
     [ApiController]
+    [AllowAnonymous]
     public class EventController : ControllerBase
     {
         private readonly IEventRepository _eventRepository;

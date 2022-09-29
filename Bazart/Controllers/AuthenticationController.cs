@@ -100,6 +100,13 @@ namespace Bazart.API.Controllers
             return Ok();
         }
 
+        [HttpGet("cookie/logout")]
+        public async Task<IActionResult> Logout()
+        {
+            await HttpContext.SignOutAsync(CookieAuthenticationDefaults.AuthenticationScheme);
+            return LocalRedirect("/");
+        }
+
         private string CreateToken(UserDto user)
         {
             var userId = _userRepository.GetUserIdByEmail(user.Email);

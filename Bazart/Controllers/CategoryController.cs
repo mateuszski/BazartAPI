@@ -1,12 +1,14 @@
 ﻿using Bazart.API.Repository.IRepository;
 using Bazart.API.Repository;
 using Bazart.Models;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Bazart.API.Controllers
 {
     [Route("api/categories")]
     [ApiController]
+    [AllowAnonymous]
     public class CategoryController : ControllerBase
     {
         private readonly ICategoryRepository _categoryRepository;

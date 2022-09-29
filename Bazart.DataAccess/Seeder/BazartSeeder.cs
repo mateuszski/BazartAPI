@@ -81,23 +81,112 @@ namespace Bazart.DataAccess.Seeder
             return order;
         }
 
-        private Event CreatEvent(User eventOwner)
+        private List<Event> CreatEvent(User eventOwner)
         {
-            Event newEvent = new Event()
+            List<Event> newEvent = new List<Event>()
             {
-                Name = Faker.Name.FullName(),
-                Description = Faker.Lorem.Sentence(10),
-                Adress = "Kraków",
-                Owner = eventOwner,
-                Users = new List<User>()
+                new Event()
                 {
-                    CreateUser("Participant1","123"),
-                    CreateUser("Participant2","123"),
-                    CreateUser("Participant3","123")
+                    Name = Faker.Name.FullName(),
+                    Description = Faker.Lorem.Sentence(50),
+                    Adress = "Kraków",
+                    Owner = eventOwner,
+                    Users = new List<User>()
+                    {
+                        CreateUser("Participant1", "123"),
+                        CreateUser("Participant2", "123"),
+                        CreateUser("Participant3", "123")
+                    },
+                    ImageUrl =
+                        "https://images.unsplash.com/photo-1513818433747-5f175a60caee?crop=entropy&cs=tinysrgb&fit=crop&fm=jpg&h=800&ixid=MnwxfDB8MXxyYW5kb218MHx8aW1nfHx8fHx8MTY2NDQzNjcxNQ&ixlib=rb-1.2.1&q=80&utm_campaign=api-credit&utm_medium=referral&utm_source=unsplash_source&w=800",
+                    MapLat = 44,
+                    MapLng = -80
                 },
-                ImageUrl = "imageUrlHere",
-                MapLat = 44,
-                MapLng = -80
+                new Event()
+                {
+                    Name = Faker.Name.FullName(),
+                    Description = Faker.Lorem.Sentence(50),
+                    Adress = "Kraków",
+                    Owner = eventOwner,
+                    Users = new List<User>()
+                    {
+                        CreateUser("Participant1", "123"),
+                        CreateUser("Participant2", "123"),
+                        CreateUser("Participant3", "123")
+                    },
+                    ImageUrl =
+                        "https://images.unsplash.com/photo-1514441615332-67834d513dea?crop=entropy&cs=tinysrgb&fit=crop&fm=jpg&h=800&ixid=MnwxfDB8MXxyYW5kb218MHx8ZXZlbnR8fHx8fHwxNjY0NDQyNzU4&ixlib=rb-1.2.1&q=80&utm_campaign=api-credit&utm_medium=referral&utm_source=unsplash_source&w=800",
+                    MapLat = 44,
+                    MapLng = -80
+                },
+                new Event()
+                {
+                    Name = Faker.Name.FullName(),
+                    Description = Faker.Lorem.Sentence(50),
+                    Adress = "Kraków",
+                    Owner = eventOwner,
+                    Users = new List<User>()
+                    {
+                        CreateUser("Participant1", "123"),
+                        CreateUser("Participant2", "123"),
+                        CreateUser("Participant3", "123")
+                    },
+                    ImageUrl =
+                        "https://images.unsplash.com/photo-1496024840928-4c417adf211d?crop=entropy&cs=tinysrgb&fit=crop&fm=jpg&h=800&ixid=MnwxfDB8MXxyYW5kb218MHx8ZXZlbnR8fHx8fHwxNjY0NDQyODM2&ixlib=rb-1.2.1&q=80&utm_campaign=api-credit&utm_medium=referral&utm_source=unsplash_source&w=800",
+                    MapLat = 44,
+                    MapLng = -80
+                },
+                new Event()
+                {
+                    Name = Faker.Name.FullName(),
+                    Description = Faker.Lorem.Sentence(50),
+                    Adress = "Kraków",
+                    Owner = eventOwner,
+                    Users = new List<User>()
+                    {
+                        CreateUser("Participant1", "123"),
+                        CreateUser("Participant2", "123"),
+                        CreateUser("Participant3", "123")
+                    },
+                    ImageUrl =
+                        "https://images.unsplash.com/photo-1635321101901-7ac6eec3d371?crop=entropy&cs=tinysrgb&fit=crop&fm=jpg&h=800&ixid=MnwxfDB8MXxyYW5kb218MHx8ZXZlbnR8fHx8fHwxNjY0NDQyODg2&ixlib=rb-1.2.1&q=80&utm_campaign=api-credit&utm_medium=referral&utm_source=unsplash_source&w=800",
+                    MapLat = 44,
+                    MapLng = -80
+                },
+                new Event()
+                {
+                    Name = Faker.Name.FullName(),
+                    Description = Faker.Lorem.Sentence(50),
+                    Adress = "Kraków",
+                    Owner = eventOwner,
+                    Users = new List<User>()
+                    {
+                        CreateUser("Participant1", "123"),
+                        CreateUser("Participant2", "123"),
+                        CreateUser("Participant3", "123")
+                    },
+                    ImageUrl =
+                        "https://images.unsplash.com/photo-1598387993281-cecf8b71a8f8?crop=entropy&cs=tinysrgb&fit=crop&fm=jpg&h=800&ixid=MnwxfDB8MXxyYW5kb218MHx8ZXZlbnR8fHx8fHwxNjY0NDQyOTIz&ixlib=rb-1.2.1&q=80&utm_campaign=api-credit&utm_medium=referral&utm_source=unsplash_source&w=800",
+                    MapLat = 44,
+                    MapLng = -80
+                },
+                new Event()
+                {
+                    Name = Faker.Name.FullName(),
+                    Description = Faker.Lorem.Sentence(50),
+                    Adress = "Kraków",
+                    Owner = eventOwner,
+                    Users = new List<User>()
+                    {
+                        CreateUser("Participant1", "123"),
+                        CreateUser("Participant2", "123"),
+                        CreateUser("Participant3", "123")
+                    },
+                    ImageUrl =
+                        "https://images.unsplash.com/photo-1572177147505-c44e97033921?crop=entropy&cs=tinysrgb&fit=crop&fm=jpg&h=800&ixid=MnwxfDB8MXxyYW5kb218MHx8ZXZlbnR8fHx8fHwxNjY0NDU1MTA4&ixlib=rb-1.2.1&q=80&utm_campaign=api-credit&utm_medium=referral&utm_source=unsplash_source&w=800",
+                    MapLat = 44,
+                    MapLng = -80
+                }
             };
             return newEvent;
         }
@@ -126,38 +215,38 @@ namespace Bazart.DataAccess.Seeder
             {
                 Name = "Malarstwo",
                 Description = Faker.Lorem.Sentence(),
-                ImageUrl = "https://source.unsplash.com/random/1"
+                ImageUrl = "https://images.unsplash.com/photo-1460661419201-fd4cecdf8a8b?crop=entropy&cs=tinysrgb&fit=crop&fm=jpg&h=800&ixid=MnwxfDB8MXxyYW5kb218MHx8YXJ0fHx8fHx8MTY2NDQ0MDg5Mw&ixlib=rb-1.2.1&q=80&utm_campaign=api-credit&utm_medium=referral&utm_source=unsplash_source&w=800"
             };
 
             Category sculptureCategory = new Category()
             {
                 Name = "Rzeźba",
                 Description = Faker.Lorem.Sentence(),
-                ImageUrl = "https://source.unsplash.com/random/2"
+                ImageUrl = "https://images.unsplash.com/photo-1576875813198-8060631a39ba?crop=entropy&cs=tinysrgb&fit=crop&fm=jpg&h=800&ixid=MnwxfDB8MXxyYW5kb218MHx8c2N1bHB0dXJlfHx8fHx8MTY2NDQ0MjQ2OA&ixlib=rb-1.2.1&q=80&utm_campaign=api-credit&utm_medium=referral&utm_source=unsplash_source&w=800"
             };
             Category fotographyCategory = new Category()
             {
                 Name = "Fotografia",
                 Description = Faker.Lorem.Sentence(),
-                ImageUrl = "https://source.unsplash.com/random/3"
+                ImageUrl = "https://images.unsplash.com/photo-1445090909078-0217954421ec?crop=entropy&cs=tinysrgb&fit=crop&fm=jpg&h=800&ixid=MnwxfDB8MXxyYW5kb218MHx8d29tYW58fHx8fHwxNjY0NDQyMjc3&ixlib=rb-1.2.1&q=80&utm_campaign=api-credit&utm_medium=referral&utm_source=unsplash_source&w=800"
             };
             Category handMadeCategory = new Category()
             {
                 Name = "Rękodzieło",
                 Description = Faker.Lorem.Sentence(),
-                ImageUrl = "https://source.unsplash.com/random/4"
+                ImageUrl = "https://images.unsplash.com/photo-1507022787381-b30170b5ebf4?crop=entropy&cs=tinysrgb&fit=crop&fm=jpg&h=800&ixid=MnwxfDB8MXxyYW5kb218MHx8aGFuZG1hZGV8fHx8fHwxNjY0NDQxNjQ0&ixlib=rb-1.2.1&q=80&utm_campaign=api-credit&utm_medium=referral&utm_source=unsplash_source&w=800"
             };
             Category graphicArtsCategory = new Category()
             {
                 Name = "Grafika Komputerowa",
                 Description = Faker.Lorem.Sentence(),
-                ImageUrl = "https://source.unsplash.com/random/5"
+                ImageUrl = "https://images.unsplash.com/photo-1627163439134-7a8c47e08208?crop=entropy&cs=tinysrgb&fit=crop&fm=jpg&h=800&ixid=MnwxfDB8MXxyYW5kb218MHx8Z3JhcGhpY3x8fHx8fDE2NjQ0NDE4Mzg&ixlib=rb-1.2.1&q=80&utm_campaign=api-credit&utm_medium=referral&utm_source=unsplash_source&w=800"
             };
             Category otherCategory = new Category()
             {
                 Name = "Inne",
                 Description = Faker.Lorem.Sentence(),
-                ImageUrl = "https://source.unsplash.com/random/6"
+                ImageUrl = "https://images.unsplash.com/photo-1551732998-9573f695fdbb?crop=entropy&cs=tinysrgb&fit=crop&fm=jpg&h=800&ixid=MnwxfDB8MXxyYW5kb218MHx8YXJ0fHx8fHx8MTY2NDQ0MTEyNg&ixlib=rb-1.2.1&q=80&utm_campaign=api-credit&utm_medium=referral&utm_source=unsplash_source&w=800"
             };
 
             var products = new List<Product>()
