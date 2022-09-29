@@ -13,10 +13,12 @@ namespace Bazart.API.Controllers
     public class EventController : ControllerBase
     {
         private readonly IEventRepository _eventRepository;
+        private readonly IUserRepository _userRepository;
 
-        public EventController(IEventRepository eventRepository)
+        public EventController(IEventRepository eventRepository, IUserRepository userRepository)
         {
             _eventRepository = eventRepository;
+            _userRepository = userRepository;
         }
 
         [HttpGet]
@@ -41,6 +43,20 @@ namespace Bazart.API.Controllers
         [HttpPost]
         public ActionResult CreateEvent([FromBody] CreateEventDto create)
         {
+            var userClaims = User.Claims.Select(c => new
+            {
+                Type = c.Type,
+                Value = c.Value
+            });
+            var userEmail = "";
+            foreach (var item in userClaims)
+            {
+                userEmail = item.Value;
+                break;
+            }
+
+            var userId = _userRepository.GetUserIdByEmail(userEmail);
+            create.OwnerId = userId;
             var eventid = _eventRepository.CreateNewEvent(create);
             return Created($"/api/event{eventid}", null);
         }
