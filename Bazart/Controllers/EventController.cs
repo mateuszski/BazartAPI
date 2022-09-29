@@ -60,5 +60,12 @@ namespace Bazart.API.Controllers
 
             return Ok();
         }
+
+        [HttpGet("latest")]
+        public ActionResult<IEnumerable<EventDto>> LatestEvents()
+        {
+            var latestEvents = _eventRepository.GetLatestEvents();
+            return Ok(latestEvents);
+        }
     }
 }

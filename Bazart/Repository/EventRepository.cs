@@ -5,6 +5,7 @@ using Bazart.API.Repository.IRepository;
 using Bazart.DataAccess.Data;
 using Bazart.Models;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 
 namespace Bazart.API.Repository
 {
@@ -81,6 +82,16 @@ namespace Bazart.API.Repository
             eventUpdateData.MapLat = update.MapLat;
             eventUpdateData.MapLng = update.MapLng;
             _dbContext.SaveChanges();
+        }
+
+        public IEnumerable<EventDto> GetLatestEvents()
+        {
+            var latestEvents = _dbContext
+                .Events
+                .OrderByDescending(i => i.Id)
+                .Take(5);
+            var latestEventsDto = _mapper.Map<List<EventDto>>(latestEvents);
+            return latestEventsDto;
         }
     }
 }

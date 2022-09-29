@@ -14,5 +14,7 @@ namespace Bazart.API.Repository.IRepository
         void RemoveEvent(int id);
 
         void UpdateEvent(int id, UpdateEventDto update);
+
+        IEnumerable<EventDto> GetLatestEvents();
     }
 }
