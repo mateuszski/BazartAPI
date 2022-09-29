@@ -39,7 +39,7 @@ namespace Bazart.API.Controllers
 
             CreatePasswordHash(request.Password, out byte[] passwordHash, out byte[] passwordSalt);
 
-            var firstUser =  new UserFirstRegistarationDto()
+            var firstUser = new UserFirstRegistarationDto()
             {
                 Email = request.Email,
                 FirstName = request.FirstName,
@@ -80,6 +80,18 @@ namespace Bazart.API.Controllers
         [HttpPost("login/Cookie")]
         public async Task<ActionResult<string>> LoginCookie(UserLoginDto request)
         {
+            var isUser = _userRepository.CheckIfUserExist(request.Email);
+
+            if (isUser == false)
+            {
+                return BadRequest("User not found");
+            }
+
+            if (!VerifyPasswordHash(request.Password, request.Email))
+            {
+                return BadRequest("Wrong password");
+            }
+
             List<Claim> claims = new List<Claim>
             {
                 new Claim(ClaimTypes.Email, request.Email)
