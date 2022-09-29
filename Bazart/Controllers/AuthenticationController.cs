@@ -39,7 +39,7 @@ namespace Bazart.API.Controllers
 
             CreatePasswordHash(request.Password, out byte[] passwordHash, out byte[] passwordSalt);
 
-            var firstUser = new UserFirstRegistarationDto()
+            var firstUser =  new UserFirstRegistarationDto()
             {
                 Email = request.Email,
                 FirstName = request.FirstName,
