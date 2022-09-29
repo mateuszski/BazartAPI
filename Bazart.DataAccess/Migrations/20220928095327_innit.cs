@@ -5,7 +5,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace Bazart.DataAccess.Migrations
 {
-    public partial class initDb : Migration
+    public partial class innit : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
