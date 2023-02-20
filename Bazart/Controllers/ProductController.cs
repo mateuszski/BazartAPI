@@ -44,7 +44,7 @@ namespace Bazart.Controllers
         [Authorize]
         public ActionResult<IEnumerable<ProductDto>> GetProductsByUserId([FromRoute] int id)
         {
-            Console.WriteLine("test");
+            Console.WriteLine("test"); //To jest chyba do usuniecia czy nadal testujemy?
             var productsByUserId = _productRepository.GetProductsByUserId(id);
             return Ok(productsByUserId);
         }
@@ -54,7 +54,7 @@ namespace Bazart.Controllers
         public ActionResult CreateProduct([FromBody] CreateProductDto create)
         {
             var productId = _productRepository.CreateNewProduct(create);
-            return Created($"/api/product{productId}", null);
+            return Created($"/api/product{productId}", null); // to nie jest bledem? powinno byc /api/product/{productId}
         }
 
         [HttpDelete("{id:int}")]
