@@ -21,7 +21,7 @@ namespace Bazart.API.Repository
         {
             var orderId = _dbContext
                 .Orders
-                //.Include(o => o.User)
+                //.Include(o => o.User) //komentarz do usuniecia
                 .FirstOrDefault(o => o.Id == id);
             if (orderId is null)
             {
