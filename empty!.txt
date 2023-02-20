@@ -1,0 +1,1 @@
+// poco pusty plik? Dodatkowo uzycie niebezpiecznego znaku specjalnego ! ktorego pewne systemy moga nie obsluzyc
