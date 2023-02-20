@@ -23,7 +23,7 @@ using Microsoft.AspNetCore.Authorization;
 var builder = WebApplication.CreateBuilder(args);
 
 // NLog: Setup NLog for Dependency injection
-//todo:NLOG
+//todo:NLOG //jest wpisane todo a kiedy zostanie to zrobione? To usuniecia komentarz
 builder.Logging.ClearProviders();
 builder.Host.UseNLog();
 
